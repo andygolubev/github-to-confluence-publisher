@@ -5,7 +5,7 @@ This repository contains a script that allows you to publish Markdown files from
 ## Setup
 
 ### Create new domain in Confluence cloud
-    Create new cloud domain here https://my.atlassian.com/product
+Create new cloud domain here https://my.atlassian.com/product
 
 ### Create new Space, a Parent page and API Token
 You should create a Space and copy it's name from the URL (in my case: "Documentat". The full url is https://test-publisher.atlassian.net/wiki/spaces/Documentat/)
