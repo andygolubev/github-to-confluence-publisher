@@ -2,6 +2,8 @@
 
 This repository contains a script that allows you to publish Markdown files from GitHub to Confluence. The script automates the process of converting Markdown files to Confluence markup and uploading them to your Confluence space.
 
+Link to my article: https://dev.to/andygolubev/automate-publishing-markdown-files-from-github-to-confluence-with-github-to-confluence-publisher-tool-eh4
+
 ## Setup
 
 ### Create new domain in Confluence cloud
