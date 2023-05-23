@@ -27,7 +27,7 @@ jobs:
       run: |
         ls -la
         python -m pip install --upgrade pip
-        pip install -r /publisher/requirements.txt
+        pip install -r ./publisher/requirements.txt
 
     - name: Publish MD files to the Confluence space
       env:
