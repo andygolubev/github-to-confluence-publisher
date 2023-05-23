@@ -39,4 +39,26 @@ Confluence expect you e-mail as a login and a API Key as a password.
 
 ## How it works
 
-Your confluence space is empty
+Your confluence space is empty.
+
+![space](/publisher_doc/Screenshot_01.png)
+
+Then you run the publisher and it search for the pages with "confluence_search_pattern" from the config.
+Then it deletes all the found pages.
+
+local run
+![local run](/publisher_doc/Screenshot_02.png)
+or github actions
+![github](/publisher_doc/Screenshot_03.png)
+
+Then you can see that you parent page containes child pages with your content
+
+![structure](/publisher_doc/Screenshot_04.png)
+
+All the images were poster as attachements for the pages.
+
+![attachements](/publisher_doc/Screenshot_05.png)
+
+The pages that imitates the folder contains the "Children Display" widget.
+
+![widget](/publisher_doc/Screenshot_06.png)
