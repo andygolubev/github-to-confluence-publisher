@@ -1,0 +1,8 @@
+# Site-specific settings are supplied at runtime via environment variables.
+publisher/config/config.yaml
+
+.git
+.github
+**/__pycache__
+**/*.pyc
+.pytest_cache

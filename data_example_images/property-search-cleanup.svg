@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="840" viewBox="0 0 1500 840" role="img" aria-labelledby="title desc">
+  <title id="title">Content properties, search, and cleanup</title>
+  <desc id="desc">The publisher finds generated pages by property key, republishes the current tree, and prunes only stale ids.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f2e8"/>
+      <stop offset="100%" stop-color="#dfeaec"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L14,7 L0,14 z" fill="#35516a"/>
+    </marker>
+    <style>
+      .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #486377; }
+      .panel { fill: #ffffff; stroke: #d8d1c8; stroke-width: 2.5; }
+      .soft { fill: #eef4f5; stroke: #bfd0d4; stroke-width: 1.6; }
+      .warn { fill: #fcf4eb; stroke: #e9c49f; stroke-width: 1.6; }
+      .good { fill: #eef7f3; stroke: #bcd8cc; stroke-width: 1.6; }
+      .panel-title { font: 700 28px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .tile-title { font: 700 20px Helvetica, Arial, sans-serif; fill: #405b71; }
+      .copy { font: 500 16px Helvetica, Arial, sans-serif; fill: #617484; }
+      .note { font: 500 17px Helvetica, Arial, sans-serif; fill: #4d6579; }
+      .arrow { fill: none; stroke: #35516a; stroke-width: 5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1500" height="840" fill="url(#bg)"/>
+  <text x="750" y="66" text-anchor="middle" class="title">Content Properties, Search, and Cleanup</text>
+  <text x="750" y="102" text-anchor="middle" class="subtitle">Property keys identify generated pages. Cleanup happens after the current tree is republished.</text>
+
+  <rect x="70" y="170" width="380" height="560" rx="28" class="panel"/>
+  <text x="260" y="224" text-anchor="middle" class="panel-title">1. Find generated pages</text>
+  <rect x="110" y="264" width="300" height="104" rx="18" class="soft"/>
+  <text x="136" y="302" class="tile-title">Descendant search</text>
+  <text x="136" y="331" class="copy">Search only beneath the configured</text>
+  <text x="136" y="354" class="copy">parent page.</text>
+  <rect x="110" y="392" width="300" height="104" rx="18" class="soft"/>
+  <text x="136" y="430" class="tile-title">Property check</text>
+  <text x="136" y="459" class="copy">Keep ids that actually carry</text>
+  <text x="136" y="482" class="copy">`publisher_property_key`.</text>
+  <rect x="110" y="520" width="300" height="104" rx="18" class="warn"/>
+  <text x="136" y="558" class="tile-title">Legacy fallback</text>
+  <text x="136" y="587" class="copy">Use text search only when no</text>
+  <text x="136" y="610" class="copy">property-tagged pages were found.</text>
+
+  <rect x="560" y="170" width="380" height="560" rx="28" class="panel"/>
+  <text x="750" y="224" text-anchor="middle" class="panel-title">2. Publish current tree</text>
+  <rect x="600" y="264" width="300" height="104" rx="18" class="good"/>
+  <text x="626" y="302" class="tile-title">Upsert pages</text>
+  <text x="626" y="331" class="copy">Create or update folder pages</text>
+  <text x="626" y="354" class="copy">and Markdown pages.</text>
+  <rect x="600" y="392" width="300" height="104" rx="18" class="good"/>
+  <text x="626" y="430" class="tile-title">Attach files</text>
+  <text x="626" y="459" class="copy">Upload local images after the</text>
+  <text x="626" y="482" class="copy">page id exists.</text>
+  <rect x="600" y="520" width="300" height="104" rx="18" class="good"/>
+  <text x="626" y="558" class="tile-title">Set property</text>
+  <text x="626" y="587" class="copy">409 conflicts are harmless on</text>
+  <text x="626" y="610" class="copy">repeat runs.</text>
+
+  <rect x="1050" y="170" width="380" height="560" rx="28" class="panel"/>
+  <text x="1240" y="224" text-anchor="middle" class="panel-title">3. Prune stale ids</text>
+  <rect x="1090" y="264" width="300" height="104" rx="18" class="soft"/>
+  <text x="1116" y="302" class="tile-title">existing_pages</text>
+  <text x="1116" y="331" class="copy">Tagged descendants captured</text>
+  <text x="1116" y="354" class="copy">before publishing.</text>
+  <rect x="1090" y="392" width="300" height="104" rx="18" class="good"/>
+  <text x="1116" y="430" class="tile-title">published_pages</text>
+  <text x="1116" y="459" class="copy">Ids returned by the current</text>
+  <text x="1116" y="482" class="copy">publish walk.</text>
+  <rect x="1090" y="520" width="300" height="104" rx="18" class="warn"/>
+  <text x="1116" y="558" class="tile-title">stale = existing - published</text>
+  <text x="1116" y="587" class="copy">Delete only ids that were not</text>
+  <text x="1116" y="610" class="copy">republished this run.</text>
+
+  <path d="M450 450 C500 450 510 450 560 450" class="arrow"/>
+  <path d="M940 450 C990 450 1000 450 1050 450" class="arrow"/>
+
+  <rect x="310" y="760" width="880" height="56" rx="18" fill="#17324d" opacity="0.93"/>
+  <text x="750" y="791" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#f8f4ed">Cleanup uses page ids. Upserts still rely on parent plus title, so dedicate the parent page.</text>
+</svg>

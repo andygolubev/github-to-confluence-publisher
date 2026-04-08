@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="840" viewBox="0 0 1500 840" role="img" aria-labelledby="title desc">
+  <title id="title">Markdown image rewrite pipeline</title>
+  <desc id="desc">Local Markdown image syntax is rewritten into attachment XML and the matching file is uploaded from the image root.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f2e8"/>
+      <stop offset="100%" stop-color="#dfeaec"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L14,7 L0,14 z" fill="#35516a"/>
+    </marker>
+    <style>
+      .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #486377; }
+      .panel { fill: #ffffff; stroke: #d8d1c8; stroke-width: 2.5; }
+      .soft { fill: #eef4f5; stroke: #bfd0d4; stroke-width: 1.6; }
+      .warn { fill: #fcf4eb; stroke: #e9c49f; stroke-width: 1.6; }
+      .panel-title { font: 700 28px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .tile-title { font: 700 20px Helvetica, Arial, sans-serif; fill: #405b71; }
+      .copy { font: 500 16px Helvetica, Arial, sans-serif; fill: #617484; }
+      .code { font: 500 16px 'Courier New', Courier, monospace; fill: #17324d; }
+      .note { font: 500 17px Helvetica, Arial, sans-serif; fill: #4d6579; }
+      .arrow { fill: none; stroke: #35516a; stroke-width: 5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1500" height="840" fill="url(#bg)"/>
+  <text x="750" y="66" text-anchor="middle" class="title">Markdown Image Rewrite Pipeline</text>
+  <text x="750" y="102" text-anchor="middle" class="subtitle">Local paths become attachments. Remote URLs pass through unchanged.</text>
+
+  <rect x="70" y="170" width="380" height="560" rx="28" class="panel"/>
+  <text x="260" y="224" text-anchor="middle" class="panel-title">1. Markdown input</text>
+  <rect x="110" y="264" width="300" height="118" rx="18" class="soft"/>
+  <text x="136" y="304" class="code">![diagram](</text>
+  <text x="136" y="330" class="code">/data_images/publish-</text>
+  <text x="136" y="356" class="code">lifecycle-current.svg)</text>
+  <rect x="110" y="412" width="300" height="118" rx="18" class="warn"/>
+  <text x="136" y="452" class="code">![remote](</text>
+  <text x="136" y="478" class="code">https://example.com/</text>
+  <text x="136" y="504" class="code">image.png)</text>
+  <text x="108" y="592" class="note">Only non-http and non-https paths become</text>
+  <text x="108" y="617" class="note">local attachment candidates.</text>
+
+  <rect x="560" y="170" width="380" height="560" rx="28" class="panel"/>
+  <text x="750" y="224" text-anchor="middle" class="panel-title">2. Rewrite and convert</text>
+  <rect x="600" y="264" width="300" height="104" rx="18" class="soft"/>
+  <text x="626" y="302" class="tile-title">Extract basename</text>
+  <text x="626" y="331" class="copy">Keep only</text>
+  <text x="626" y="354" class="copy">`publish-lifecycle-current.svg`.</text>
+  <rect x="600" y="392" width="300" height="104" rx="18" class="soft"/>
+  <text x="626" y="430" class="tile-title">Insert storage XML</text>
+  <text x="626" y="459" class="copy">Replace Markdown image syntax</text>
+  <text x="626" y="482" class="copy">with `ri:attachment` markup.</text>
+  <rect x="600" y="520" width="300" height="104" rx="18" class="warn"/>
+  <text x="626" y="558" class="tile-title">Line-based parser</text>
+  <text x="626" y="587" class="copy">Keep image syntax on one line</text>
+  <text x="626" y="610" class="copy">and use unique basenames.</text>
+
+  <rect x="1050" y="170" width="380" height="560" rx="28" class="panel"/>
+  <text x="1240" y="224" text-anchor="middle" class="panel-title">3. Page body and upload</text>
+  <rect x="1090" y="264" width="300" height="118" rx="18" class="soft"/>
+  <text x="1116" y="302" class="code">&lt;ac:image&gt;</text>
+  <text x="1116" y="328" class="code">&lt;ri:attachment</text>
+  <text x="1116" y="354" class="code">ri:filename="publish-</text>
+  <text x="1116" y="380" class="code">lifecycle-current.svg"/&gt;</text>
+  <rect x="1090" y="412" width="300" height="118" rx="18" class="soft"/>
+  <text x="1116" y="450" class="tile-title">Upload matching file</text>
+  <text x="1116" y="479" class="copy">Look under `github_folder_with_</text>
+  <text x="1116" y="502" class="copy">image_files/publish-lifecycle-current.svg`.</text>
+  <text x="1088" y="592" class="note">Missing files log an error, but the page</text>
+  <text x="1088" y="617" class="note">body still publishes.</text>
+
+  <path d="M450 450 C500 450 510 450 560 450" class="arrow"/>
+  <path d="M940 450 C990 450 1000 450 1050 450" class="arrow"/>
+
+  <rect x="350" y="760" width="800" height="56" rx="18" fill="#17324d" opacity="0.93"/>
+  <text x="750" y="791" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#f8f4ed">Keep image syntax on one line and avoid duplicate attachment filenames.</text>
+</svg>
