@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 320" font-family="system-ui, Segoe UI, sans-serif">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#047857;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="g3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#6d28d9;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="920" height="320" fill="#f8fafc"/>
+  <text x="460" y="36" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a">GitHub to Confluence publisher - system context</text>
+  <rect x="40" y="80" width="200" height="120" rx="12" fill="url(#g1)" filter="url(#shadow)"/>
+  <text x="140" y="125" text-anchor="middle" fill="white" font-size="15" font-weight="600">Git repository</text>
+  <text x="140" y="152" text-anchor="middle" fill="#dbeafe" font-size="12">Markdown tree</text>
+  <text x="140" y="172" text-anchor="middle" fill="#dbeafe" font-size="12">+ /data_images</text>
+  <rect x="360" y="70" width="220" height="140" rx="12" fill="url(#g2)" filter="url(#shadow)"/>
+  <text x="470" y="118" text-anchor="middle" fill="white" font-size="15" font-weight="600">Publisher</text>
+  <text x="470" y="142" text-anchor="middle" fill="#d1fae5" font-size="11">Python 3.14 · requests · markdown</text>
+  <text x="470" y="162" text-anchor="middle" fill="#d1fae5" font-size="11">Config YAML + env overrides</text>
+  <text x="470" y="182" text-anchor="middle" fill="#d1fae5" font-size="11">Full refresh per run</text>
+  <rect x="680" y="80" width="200" height="120" rx="12" fill="url(#g3)" filter="url(#shadow)"/>
+  <text x="780" y="125" text-anchor="middle" fill="white" font-size="15" font-weight="600">Confluence Cloud</text>
+  <text x="780" y="152" text-anchor="middle" fill="#ede9fe" font-size="12">REST API</text>
+  <text x="780" y="172" text-anchor="middle" fill="#ede9fe" font-size="12">Pages + attachments</text>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <path d="M 245 140 L 350 140" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <path d="M 585 140 L 670 140" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arr)"/>
+  <text x="297" y="128" text-anchor="middle" font-size="11" fill="#475569">checkout / mount</text>
+  <text x="627" y="128" text-anchor="middle" font-size="11" fill="#475569">Basic auth</text>
+  <rect x="60" y="250" width="800" height="52" rx="8" fill="#e2e8f0"/>
+  <text x="460" y="275" text-anchor="middle" font-size="12" fill="#334155">Typical automation: GitHub Actions builds the Docker image and runs the publisher with Confluence secrets.</text>
+  <text x="460" y="294" text-anchor="middle" font-size="12" fill="#334155">Local runs use the same container or `python publisher/main.py` with equivalent environment.</text>
+</svg>

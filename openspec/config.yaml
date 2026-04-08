@@ -1,0 +1,18 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+context: |
+  GitHub → Confluence Markdown publisher. Process and stack: openspec/architecture.md.
+  Code: publisher/ (Python 3.14). Docker: python:3.14-slim + CA certs. Sources: data/; images: data_images/. CI: .github/workflows/publisher.yml.
+  Confluence: REST API + HTTP Basic (email + API token). Specs: openspec/specs/publisher/spec.md.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours

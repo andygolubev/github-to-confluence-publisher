@@ -38,7 +38,7 @@ def publishFolder(folder, login, password, parentPageID = None): # parentPageID 
                         # Pattern: \A!\[.*]\(.*\)\Z 
                         # example:  ![test](/data_images/test_image.jpg)                         
 
-                        result = re.findall("\A!\[.*]\((?!http)(.*)\)", line)
+                        result = re.findall(r"\A!\[.*]\((?!http)(.*)\)", line)
 
                         if bool(result):   # line contains an image                         
                             # extract filename from the full path

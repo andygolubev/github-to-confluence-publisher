@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 360" font-family="system-ui, Segoe UI, sans-serif">
+  <rect width="880" height="360" fill="#ecfdf5"/>
+  <text x="440" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#065f46">Docker runtime  inputs</text>
+  <rect x="40" y="55" width="800" height="280" rx="16" fill="white" stroke="#059669" stroke-width="3" stroke-dasharray="8 4"/>
+  <text x="440" y="82" text-anchor="middle" font-size="14" font-weight="600" fill="#047857">Image: python:3.14-slim + ca-certificates</text>
+  <rect x="70" y="105" width="230" height="210" rx="10" fill="#d1fae5" stroke="#10b981"/>
+  <text x="185" y="132" text-anchor="middle" font-weight="600" fill="#065f46">Secrets (env)</text>
+  <g font-size="11" fill="#064e3b" font-family="ui-monospace, monospace">
+    <text x="85" y="158">CONFLUENCE_URL</text>
+    <text x="85" y="180">CONFLUENCE_SPACE</text>
+    <text x="85" y="202">CONFLUENCE_PARENT_PAGE_ID</text>
+    <text x="85" y="224">CONFLUENCE_LOGIN</text>
+    <text x="85" y="246">CONFLUENCE_API_TOKEN</text>
+    <text x="85" y="268">BANNER_* (optional)</text>
+    <text x="85" y="290">PUBLISHER_*_ROOT (optional)</text>
+  </g>
+  <rect x="325" y="105" width="230" height="210" rx="10" fill="#fef9c3" stroke="#ca8a04"/>
+  <text x="440" y="132" text-anchor="middle" font-weight="600" fill="#854d0e">Volumes (typical)</text>
+  <g font-size="11" fill="#713f12" font-family="ui-monospace, monospace">
+    <text x="340" y="165">/app/data ’ Markdown</text>
+    <text x="340" y="190">/app/data_images ’ assets</text>
+    <text x="340" y="215">/usr/local/share/ca-certificates/</text>
+    <text x="355" y="235">custom/ ’ corporate CA</text>
+    <text x="340" y="265" font-size="10">Entry: update-ca-certificates</text>
+    <text x="340" y="285" font-size="10">then python publisher/main.py</text>
+  </g>
+  <rect x="580" y="105" width="230" height="210" rx="10" fill="#e0e7ff" stroke="#4f46e5"/>
+  <text x="695" y="132" text-anchor="middle" font-weight="600" fill="#312e81">Behavior</text>
+  <g font-size="12" fill="#3730a3">
+    <text x="595" y="165">TLS verify on (requests)</text>
+    <text x="595" y="190">No credentials in repo</text>
+    <text x="595" y="215">GitHub Actions passes</text>
+    <text x="595" y="235">secrets as --env</text>
+  </g>
+</svg>

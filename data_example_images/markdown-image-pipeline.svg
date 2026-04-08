@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 300" font-family="system-ui, Segoe UI, sans-serif">
+  <rect width="840" height="300" fill="#faf5ff"/>
+  <text x="420" y="32" text-anchor="middle" font-size="18" font-weight="700" fill="#581c87">Images in Markdown ’ Confluence attachments</text>
+  <rect x="40" y="60" width="220" height="200" rx="10" fill="white" stroke="#a855f7" stroke-width="2"/>
+  <text x="150" y="92" text-anchor="middle" font-weight="600">Source .md</text>
+  <text x="55" y="120" font-family="ui-monospace, monospace" font-size="11" fill="#6b21a8">![Fig](/data_images/x.png)</text>
+  <text x="55" y="150" font-size="11" fill="#7e22ce">Local path only</text>
+  <text x="55" y="175" font-size="11" fill="#7e22ce">http(s) skipped</text>
+  <path d="M 265 160 L 315 160" stroke="#9333ea" stroke-width="2"/>
+  <polygon points="315,160 303,154 303,166" fill="#9333ea"/>
+  <rect x="320" y="60" width="200" height="200" rx="10" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/>
+  <text x="420" y="92" text-anchor="middle" font-weight="600">Publisher</text>
+  <text x="335" y="125" font-size="11" fill="#6b21a8">Replace line with</text>
+  <text x="335" y="148" font-family="ui-monospace, monospace" font-size="9" fill="#4c1d95">&lt;ac:image&gt;&&lt;/ac:image&gt;</text>
+  <text x="335" y="180" font-size="11" fill="#6b21a8">Markdown ’ HTML</text>
+  <text x="335" y="205" font-size="11" fill="#6b21a8">+ repo banner</text>
+  <path d="M 525 160 L 575 160" stroke="#9333ea" stroke-width="2"/>
+  <polygon points="575,160 563,154 563,166" fill="#9333ea"/>
+  <rect x="580" y="60" width="220" height="200" rx="10" fill="white" stroke="#7c3aed" stroke-width="2"/>
+  <text x="690" y="92" text-anchor="middle" font-weight="600">Confluence page</text>
+  <text x="595" y="130" font-size="11" fill="#5b21b6">Rendered image in body</text>
+  <text x="595" y="160" font-size="11" fill="#5b21b6">File attached with</text>
+  <text x="595" y="180" font-size="11" fill="#5b21b6">same filename</text>
+  <text x="595" y="215" font-family="ui-monospace, monospace" font-size="10" fill="#4c1d95">github_folder_with_image_files</text>
+</svg>

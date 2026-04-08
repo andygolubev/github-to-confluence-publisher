@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" font-family="system-ui, Segoe UI, sans-serif">
+  <defs>
+    <marker id="d" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <circle cx="4" cy="4" r="3" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="880" height="400" fill="#fafafa"/>
+  <text x="440" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#111827">Single publish run: ordered steps</text>
+  <g font-size="13" fill="#1f2937">
+    <rect x="320" y="60" width="240" height="44" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="440" y="88" text-anchor="middle" font-weight="600">1. Verify parent page (GET)</text>
+    <path d="M 440 104 L 440 118" stroke="#6b7280" stroke-width="2" marker-end="url(#d)"/>
+    <rect x="300" y="120" width="280" height="44" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="440" y="148" text-anchor="middle" font-weight="600">2. CQL search: tagged child pages</text>
+    <path d="M 440 164 L 440 178" stroke="#6b7280" stroke-width="2" marker-end="url(#d)"/>
+    <rect x="290" y="180" width="300" height="44" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    <text x="440" y="208" text-anchor="middle" font-weight="600">3. Delete each found page (full refresh)</text>
+    <path d="M 440 224 L 440 238" stroke="#6b7280" stroke-width="2" marker-end="url(#d)"/>
+    <rect x="270" y="240" width="340" height="44" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+    <text x="440" y="268" text-anchor="middle" font-weight="600">4. Walk Markdown root: folders and .md files</text>
+    <path d="M 440 284 L 440 298" stroke="#6b7280" stroke-width="2" marker-end="url(#d)"/>
+    <rect x="250" y="300" width="380" height="56" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="440" y="325" text-anchor="middle" font-weight="600">5. Create pages, attach images, set content property</text>
+    <text x="440" y="345" text-anchor="middle" font-size="11" fill="#5b21b6">Each run mirrors the current Git tree under the configured parent.</text>
+  </g>
+</svg>
