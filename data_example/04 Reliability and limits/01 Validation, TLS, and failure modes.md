@@ -10,8 +10,8 @@ The publisher tries to fail early on configuration mistakes and malformed API re
 |---|---|---|
 | Credential presence | `main.py` | Empty login or token runs |
 | URL normalization | `config/confluence_url.py` | Using the wiki home URL instead of the REST API base |
-| Space key and parent id validation | `config/getconfig.py` | Invalid CQL inputs and non-numeric page ids |
-| Parent page verification | `pagesController.verify_parent_page_exists()` | Publishing beneath a missing or misconfigured ancestor |
+| Space key and parent id validation | `config/get_config.py` | Invalid CQL inputs and non-numeric page ids |
+| Parent page verification | `ConfluenceClient.verify_parent_page_exists()` | Publishing beneath a missing or misconfigured ancestor |
 | HTML-vs-JSON detection | `_confluence_request_error_message()` | Misleading API failures when the URL points at an HTML page |
 | Pydantic response validation | `confluence_api_models.py` | Silent schema drift in Confluence responses |
 | TLS verification | `requests` defaults and the container CA store | Insecure `verify=False` behavior |

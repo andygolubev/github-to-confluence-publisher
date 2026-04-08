@@ -15,7 +15,7 @@ Folder names and Markdown filenames define the page tree. The publisher never in
 
 ## Upsert behavior
 
-`pagesController.upsert_page()` first searches for an existing direct child page with the same title under the target parent. It then:
+`ConfluenceClient.upsert_page()` first searches for an existing direct child page with the same title under the target parent. It then:
 
 - updates the page when a matching title already exists under that parent
 - creates a new page when no direct child match exists

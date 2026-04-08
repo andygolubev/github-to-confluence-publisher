@@ -22,8 +22,6 @@ The code does not rely on property-based CQL filters because they have been unre
 2. checks each returned page for the configured property key
 3. keeps only pages that actually have the property
 
-If that filtered result is empty and `confluence_search_pattern` is set, the client performs one legacy text search to catch pages created by older releases.
-
 ## Cleanup strategy
 
 The deletion phase happens after publishing:

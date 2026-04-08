@@ -8,11 +8,11 @@ The current implementation preserves matching pages by updating them in place wh
 
 ### 1. Resolve credentials
 
-`main.py` accepts `--login` and `--password` or falls back to `CONFLUENCE_LOGIN` and `CONFLUENCE_API_TOKEN`. Empty values stop the run immediately.
+`main.py` accepts `--login` and `--api-token` or falls back to `CONFLUENCE_LOGIN` and `CONFLUENCE_API_TOKEN`. Empty values stop the run immediately.
 
 ### 2. Load and normalize configuration
 
-`getConfig()` reads `publisher/config/config.yaml` when present, migrates the historical `counfluence_parent_page_id` typo, normalizes `confluence_url`, and applies environment overrides.
+`get_config()` reads `publisher/config/config.yaml` when present, migrates the historical `counfluence_parent_page_id` typo, normalizes `confluence_url`, and applies environment overrides.
 
 ### 3. Optional dry run
 

@@ -18,9 +18,9 @@ The publisher is a short-lived Python CLI that turns a repository folder tree in
 | File | What it owns |
 |---|---|
 | `publisher/main.py` | CLI args, credential resolution, dry-run short circuit, top-level orchestration |
-| `publisher/config/getconfig.py` | Load `config.yaml`, normalize URL, apply env overrides, validate keys |
-| `publisher/pagesPublisher.py` | Recursive filesystem walk, Markdown conversion, local image extraction, attachment upload |
-| `publisher/pagesController.py` | REST calls for verify, search, create, update, delete, property writes, and attachments |
+| `publisher/config/get_config.py` | Load `config.yaml`, normalize URL, apply env overrides, validate keys |
+| `publisher/pages_publisher.py` | Recursive filesystem walk, Markdown conversion, local image extraction, attachment upload |
+| `publisher/pages_controller.py` | REST calls for verify, search, create, update, delete, property writes, and attachments |
 | `publisher/docker_entrypoint.py` | Refresh the container CA bundle before starting the CLI |
 | `.github/workflows/publisher.yml` | Build, test, smoke test, and publish the example content |
 

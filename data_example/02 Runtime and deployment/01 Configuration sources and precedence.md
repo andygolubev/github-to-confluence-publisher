@@ -12,8 +12,8 @@ The publisher has two runtime modes:
 | Input source | Applies to | Notes |
 |---|---|---|
 | `publisher/config/config.yaml` | Local runs | Optional; ignored in the container image because the file is not copied into the image |
-| Environment variables | Local runs and CI | Override URL, space, parent id, banner fields, property key, legacy pattern, Markdown root, and image root |
-| CLI flags | Credentials only | `--login` and `--password` override the credential environment variables |
+| Environment variables | Local runs and CI | Override URL, space, parent id, banner fields, property key, Markdown root, and image root |
+| CLI flags | Credentials only | `--login` and `--api-token` override the credential environment variables |
 
 ## Config fields with behavior attached
 
@@ -23,7 +23,6 @@ The publisher has two runtime modes:
 | `confluence_space` | Used in search CQL and page creation payloads |
 | `confluence_parent_page_id` | Default ancestor for all generated pages |
 | `publisher_property_key` | Property key written to each generated page |
-| `confluence_search_pattern` | Legacy cleanup fallback used only when no property-tagged pages are found |
 | `github_folder_with_md_files` | Root scanned by `publish_folder()` |
 | `github_folder_with_image_files` | Directory searched for attachment files by basename |
 | `banner_repo_url`, `banner_project_name` | Render the HTML banner prepended to every page body |
@@ -37,7 +36,6 @@ CONFLUENCE_PARENT_PAGE_ID
 CONFLUENCE_LOGIN
 CONFLUENCE_API_TOKEN
 PUBLISHER_PROPERTY_KEY
-CONFLUENCE_LEGACY_SEARCH_PATTERN
 BANNER_REPO_URL
 BANNER_PROJECT_NAME
 PUBLISHER_MARKDOWN_ROOT
@@ -46,4 +44,4 @@ PUBLISHER_IMAGES_ROOT
 
 ## Compatibility detail
 
-`getConfig()` still accepts the old YAML key `counfluence_parent_page_id` and rewrites it to `confluence_parent_page_id`. That keeps older local config files working even though the typo should not be used in new examples.
+`get_config()` still accepts the old YAML key `counfluence_parent_page_id` and rewrites it to `confluence_parent_page_id`. That keeps older local config files working even though the typo should not be used in new examples.

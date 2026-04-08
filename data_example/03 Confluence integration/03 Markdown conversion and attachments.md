@@ -6,7 +6,7 @@ Markdown files are converted to Confluence storage HTML, and local image syntax 
 
 ## Markdown features enabled
 
-`pagesPublisher.py` enables:
+`pages_publisher.py` enables:
 
 - tables
 - fenced code blocks

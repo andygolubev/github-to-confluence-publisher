@@ -8,7 +8,7 @@ The test suite gives good coverage of the small core, but the implementation is 
 |---|---|
 | URL handling | Atlassian Cloud space URLs and server-style `/confluence` URLs normalize correctly |
 | Config validation | Allowed space key characters, numeric parent ids, and typo-key migration |
-| Search and tagging | Property writes, `409` tolerance, and legacy fallback search |
+| Search and tagging | Property writes, `409` tolerance, and property-based filtering |
 | Publish walk | Folder pages, recursion, non-Markdown skips, and returned processed ids |
 | Image extraction | Local vs remote images, multiple images on one line, and basename extraction |
 | Update semantics | Existing pages increment version numbers on update |

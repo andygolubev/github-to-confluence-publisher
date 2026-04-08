@@ -16,9 +16,9 @@ That makes this folder a realistic smoke test for navigation, hierarchy, Markdow
 
 | Section | Focus | Main code paths |
 |---|---|---|
-| `01 Architecture overview` | Modules, data flow, and sync lifecycle | `publisher/main.py`, `publisher/pagesPublisher.py`, `publisher/pagesController.py` |
-| `02 Runtime and deployment` | Config precedence, Docker runtime, GitHub Actions | `publisher/config/getconfig.py`, `Dockerfile`, `.github/workflows/publisher.yml` |
-| `03 Confluence integration` | Hierarchy mapping, upserts, properties, attachments | `publisher/pagesController.py`, `publisher/pagesPublisher.py` |
+| `01 Architecture overview` | Modules, data flow, and sync lifecycle | `publisher/main.py`, `publisher/pages_publisher.py`, `publisher/pages_controller.py` |
+| `02 Runtime and deployment` | Config precedence, Docker runtime, GitHub Actions | `publisher/config/get_config.py`, `Dockerfile`, `.github/workflows/publisher.yml` |
+| `03 Confluence integration` | Hierarchy mapping, upserts, properties, attachments | `publisher/pages_controller.py`, `publisher/pages_publisher.py` |
 | `04 Reliability and limits` | Validation, TLS, tests, and edge cases | `publisher/test_*.py`, `publisher/config/confluence_url.py` |
 
 ## Current operating model
