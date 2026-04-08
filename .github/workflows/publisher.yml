@@ -75,6 +75,6 @@ jobs:
           -e CONFLUENCE_LEGACY_SEARCH_PATTERN \
           -e PUBLISHER_MARKDOWN_ROOT \
           -e PUBLISHER_IMAGES_ROOT \
-          -v "${{ github.workspace }}/data:/app/data:ro" \
-          -v "${{ github.workspace }}/data_images:/app/data_images:ro" \
+          -v "${{ github.workspace }}/data_example:/app/data:ro" \
+          -v "${{ github.workspace }}/data_example_images:/app/data_images:ro" \
           confluence-publisher:${{ github.sha }}
