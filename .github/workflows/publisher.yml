@@ -36,6 +36,13 @@ jobs:
     - name: Build publisher image
       run: docker build -t confluence-publisher:${{ github.sha }} .
 
+    - name: Run unit tests
+      run: |
+        docker run --rm \
+          --entrypoint python \
+          confluence-publisher:${{ github.sha }} \
+          -m unittest discover -s /app/publisher -p "test_*.py" -v
+
     - name: Verify Confluence API connection
       if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false }}
       run: |
