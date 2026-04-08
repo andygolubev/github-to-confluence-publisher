@@ -7,7 +7,6 @@ import re
 import requests
 from requests.auth import HTTPBasicAuth
 
-from config.getconfig import getConfig
 from confluence_api_models import (
     AttachmentResponse,
     CreatedPageResponse,

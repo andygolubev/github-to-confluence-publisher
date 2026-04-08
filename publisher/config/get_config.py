@@ -39,7 +39,7 @@ def _validate_config(cfg: dict) -> None:
         )
 
 
-def getConfig():
+def get_config():
     config_path = Path(__file__).resolve().parent / "config.yaml"
     cfg = {}
     if config_path.is_file():

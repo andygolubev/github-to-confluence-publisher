@@ -1,4 +1,4 @@
-"""Unit tests for pagesPublisher module."""
+"""Unit tests for pages_publisher module."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from unittest.mock import MagicMock
 
-from pagesPublisher import DISPLAY_CHILDREN_MACRO, _extract_images, publish_folder
+from pages_publisher import DISPLAY_CHILDREN_MACRO, _extract_images, publish_folder
 
 
 class TestExtractImages(unittest.TestCase):

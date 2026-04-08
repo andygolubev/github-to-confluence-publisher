@@ -4,7 +4,7 @@ import re
 
 import markdown
 
-from pagesController import ConfluenceClient
+from pages_controller import ConfluenceClient
 
 DISPLAY_CHILDREN_MACRO = '<ac:structured-macro ac:name="children" ac:schema-version="2"/>'
 

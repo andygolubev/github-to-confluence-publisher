@@ -3,19 +3,19 @@ import logging
 import os
 import sys
 
-from config.getconfig import getConfig
-from pagesController import ConfluenceClient
-from pagesPublisher import publish_folder
+from config.get_config import get_config
+from pages_controller import ConfluenceClient
+from pages_publisher import publish_folder
 
 logging.basicConfig(level=logging.INFO)
 
 
-def _resolve_credentials(login, password):
+def _resolve_credentials(login, api_token):
     login = (login or os.environ.get("CONFLUENCE_LOGIN") or "").strip() or None
-    password = (
-        password or os.environ.get("CONFLUENCE_API_TOKEN") or ""
+    api_token = (
+        api_token or os.environ.get("CONFLUENCE_API_TOKEN") or ""
     ).strip() or None
-    return login, password
+    return login, api_token
 
 
 def main() -> None:
@@ -26,7 +26,7 @@ def main() -> None:
         help="Confluence user email (or set CONFLUENCE_LOGIN)",
     )
     parser.add_argument(
-        "--password",
+        "--api-token",
         default=None,
         help="Atlassian API token (or set CONFLUENCE_API_TOKEN)",
     )
@@ -37,15 +37,15 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    login, password = _resolve_credentials(args.login, args.password)
-    if not login or not password:
+    login, api_token = _resolve_credentials(args.login, args.api_token)
+    if not login or not api_token:
         logging.error(
-            "Missing credentials: pass --login and --password, or set "
+            "Missing credentials: pass --login and --api-token, or set "
             "CONFLUENCE_LOGIN and CONFLUENCE_API_TOKEN."
         )
         sys.exit(1)
 
-    config = getConfig()
+    config = get_config()
     logging.debug(config)
 
     if args.dry_run:
@@ -58,7 +58,7 @@ def main() -> None:
         )
         return
 
-    client = ConfluenceClient(login=login, password=password, config=config)
+    client = ConfluenceClient(login=login, password=api_token, config=config)
     client.verify_parent_page_exists()
 
     # Snapshot existing published pages before we touch anything.

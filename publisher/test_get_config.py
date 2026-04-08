@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from config.getconfig import _validate_config
+from config.get_config import _validate_config
 
 
 class TestValidateConfig(unittest.TestCase):
@@ -42,7 +42,7 @@ class TestValidateConfig(unittest.TestCase):
     def test_typo_key_migration(self):
         """counfluence_parent_page_id (old typo) should be migrated to the correct key."""
         cfg = {"counfluence_parent_page_id": 777, "confluence_space": "TST"}
-        # Simulate the migration logic from getConfig()
+        # Simulate the migration logic from get_config()
         if "counfluence_parent_page_id" in cfg and "confluence_parent_page_id" not in cfg:
             cfg["confluence_parent_page_id"] = cfg.pop("counfluence_parent_page_id")
         self.assertEqual(cfg["confluence_parent_page_id"], 777)

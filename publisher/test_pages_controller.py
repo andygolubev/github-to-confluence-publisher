@@ -5,8 +5,8 @@ from __future__ import annotations
 import unittest
 from unittest.mock import MagicMock, patch
 
-import pagesController as pc
-from pagesController import ConfluenceClient
+import pages_controller as pc
+from pages_controller import ConfluenceClient
 
 
 def _make_client(cfg: dict) -> ConfluenceClient:
@@ -20,7 +20,7 @@ class TestSetPageProperty(unittest.TestCase):
             "publisher_property_key": "my-publisher-key",
         }
         client = _make_client(cfg)
-        with patch("pagesController.requests.post") as post:
+        with patch("pages_controller.requests.post") as post:
             post.return_value = MagicMock(status_code=200, text="{}")
             client.set_page_property("12345")
         post.assert_called_once()
@@ -35,7 +35,7 @@ class TestSetPageProperty(unittest.TestCase):
     def test_raises_on_error_status(self):
         cfg = {"confluence_url": "https://example.com/wiki/rest/api/", "publisher_property_key": "k"}
         client = _make_client(cfg)
-        with patch("pagesController.requests.post") as post:
+        with patch("pages_controller.requests.post") as post:
             post.return_value = MagicMock(status_code=400, text="bad")
             with self.assertRaises(RuntimeError):
                 client.set_page_property("1")
@@ -43,7 +43,7 @@ class TestSetPageProperty(unittest.TestCase):
     def test_includes_timeout(self):
         cfg = {"confluence_url": "https://example.com/wiki/rest/api/", "publisher_property_key": "k"}
         client = _make_client(cfg)
-        with patch("pagesController.requests.post") as post:
+        with patch("pages_controller.requests.post") as post:
             post.return_value = MagicMock(status_code=200, text="{}")
             client.set_page_property("1")
         self.assertEqual(post.call_args.kwargs.get("timeout"), 120)
@@ -129,7 +129,7 @@ class TestSetPagePropertyTolerates409(unittest.TestCase):
     def test_409_does_not_raise(self):
         cfg = {"confluence_url": "https://example.com/wiki/rest/api/", "publisher_property_key": "k"}
         client = _make_client(cfg)
-        with patch("pagesController.requests.post") as post:
+        with patch("pages_controller.requests.post") as post:
             post.return_value = MagicMock(status_code=409, text="conflict")
             client.set_page_property("1")  # should not raise
 
@@ -163,7 +163,7 @@ class TestUpsertPage(unittest.TestCase):
 
     def test_update_page_increments_version(self):
         client = _make_client(self._base_cfg())
-        with patch("pagesController.requests.put") as put:
+        with patch("pages_controller.requests.put") as put:
             put.return_value = MagicMock(
                 status_code=200,
                 text='{"id":"42"}',
@@ -179,7 +179,7 @@ class TestDeletePages(unittest.TestCase):
     def test_returns_deleted_ids(self):
         cfg = {"confluence_url": "https://example.com/wiki/rest/api/"}
         client = _make_client(cfg)
-        with patch("pagesController.requests.delete") as delete:
+        with patch("pages_controller.requests.delete") as delete:
             delete.return_value = MagicMock(status_code=204)
             result = client.delete_pages(["1", "2"])
         self.assertEqual(result, ["1", "2"])
@@ -187,7 +187,7 @@ class TestDeletePages(unittest.TestCase):
     def test_skips_already_absent_pages(self):
         cfg = {"confluence_url": "https://example.com/wiki/rest/api/"}
         client = _make_client(cfg)
-        with patch("pagesController.requests.delete") as delete:
+        with patch("pages_controller.requests.delete") as delete:
             delete.return_value = MagicMock(status_code=404)
             result = client.delete_pages(["1"])
         self.assertEqual(result, [])

@@ -22,7 +22,7 @@ class TestMainStaleDeletion(unittest.TestCase):
         client.search_pages.return_value = ["page-1", "page-2", "page-3"]
 
         with patch("main._resolve_credentials", return_value=("user@example.com", "token")):
-            with patch("main.getConfig", return_value=self._base_config()):
+            with patch("main.get_config", return_value=self._base_config()):
                 with patch("main.ConfluenceClient", return_value=client):
                     with patch("main.publish_folder", return_value={"page-1", "page-3", "page-4"}):
                         with patch("sys.argv", ["publisher/main.py"]):
@@ -36,7 +36,7 @@ class TestMainStaleDeletion(unittest.TestCase):
         client.search_pages.return_value = ["page-1", "page-2"]
 
         with patch("main._resolve_credentials", return_value=("user@example.com", "token")):
-            with patch("main.getConfig", return_value=self._base_config()):
+            with patch("main.get_config", return_value=self._base_config()):
                 with patch("main.ConfluenceClient", return_value=client):
                     with patch("main.publish_folder", return_value={"page-1", "page-2"}):
                         with patch("sys.argv", ["publisher/main.py"]):

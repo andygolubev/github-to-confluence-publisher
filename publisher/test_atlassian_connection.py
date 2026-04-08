@@ -22,7 +22,7 @@ if str(_PUBLISHER_ROOT) not in sys.path:
 import requests
 from requests.auth import HTTPBasicAuth
 
-from config.getconfig import getConfig
+from config.get_config import get_config
 
 
 def main() -> int:
@@ -47,7 +47,7 @@ def main() -> int:
         )
         return 1
 
-    cfg = getConfig()
+    cfg = get_config()
     base = cfg["confluence_url"].rstrip("/") + "/"
     space_key = str(cfg["confluence_space"]).strip()
     auth = HTTPBasicAuth(login, token)

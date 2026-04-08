@@ -1,6 +1,6 @@
 # GitHub to Confluence Publisher
 
-Publishes Markdown files from a GitHub repository to a Confluence space. On every run it finds all previously published pages, deletes them, and recreates the full structure from the current Markdown files — keeping Confluence always in sync with your repo.
+Publishes Markdown files from a GitHub repository to a Confluence space. On every run it creates new pages, updates existing ones, and deletes stale pages that are no longer in the repo — keeping Confluence always in sync with your repository.
 
 ## How it works
 
@@ -32,7 +32,7 @@ Publishes Markdown files from a GitHub repository to a Confluence space. On ever
 ### 2. Create an API token
 
 Go to <https://id.atlassian.com/manage-profile/security/api-tokens> and create a new token.
-You will use your **email address** as the login and this **token** as the password.
+You will use your **email address** as the login and this **token** as the API token.
 
 ---
 
