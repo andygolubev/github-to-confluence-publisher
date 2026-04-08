@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="780" viewBox="0 0 1400 780" role="img" aria-labelledby="title desc">
+  <title id="title">Hierarchy mapping and upsert behavior</title>
+  <desc id="desc">Repository directories and Markdown files map to Confluence folder pages and content pages, with title-based upserts.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f2e9"/>
+      <stop offset="100%" stop-color="#e2eced"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L14,7 L0,14 z" fill="#35516a"/>
+    </marker>
+    <style>
+      .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #476377; }
+      .panel { fill: #ffffff; stroke: #d8d1c8; stroke-width: 2.5; }
+      .card-title { font: 700 26px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .copy { font: 500 20px Helvetica, Arial, sans-serif; fill: #3f5a71; }
+      .note { font: 500 17px Helvetica, Arial, sans-serif; fill: #617383; }
+      .folder { fill: #eef4f5; stroke: #bfd0d4; stroke-width: 1.6; }
+      .file { fill: #f9f7f1; stroke: #d6cdbf; stroke-width: 1.6; }
+      .arrow { fill: none; stroke: #35516a; stroke-width: 5; marker-end: url(#arrow); }
+      .badge-a { fill: #2f7a78; }
+      .badge-b { fill: #d67933; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="780" fill="url(#bg)"/>
+  <text x="700" y="66" text-anchor="middle" class="title">Hierarchy Mapping and Upsert Behavior</text>
+  <text x="700" y="102" text-anchor="middle" class="subtitle">Directory names become folder pages. Markdown filenames become exact Confluence page titles.</text>
+
+  <rect x="80" y="150" width="430" height="520" rx="28" class="panel"/>
+  <text x="295" y="204" text-anchor="middle" class="card-title">Repository tree</text>
+  <rect x="122" y="244" width="330" height="72" rx="18" class="folder"/>
+  <text x="148" y="287" class="copy">data_example/</text>
+  <rect x="156" y="334" width="296" height="64" rx="16" class="folder"/>
+  <text x="182" y="372" class="copy">01 Architecture overview/</text>
+  <rect x="190" y="414" width="262" height="58" rx="14" class="file"/>
+  <text x="214" y="449" class="copy" style="font-size:18px;">01 System context and module map.md</text>
+  <rect x="190" y="486" width="262" height="58" rx="14" class="file"/>
+  <text x="214" y="521" class="copy" style="font-size:18px;">02 Publish lifecycle and sync model.md</text>
+  <rect x="156" y="566" width="296" height="64" rx="16" class="folder"/>
+  <text x="182" y="604" class="copy">03 Confluence integration/</text>
+
+  <rect x="890" y="150" width="430" height="520" rx="28" class="panel"/>
+  <text x="1105" y="204" text-anchor="middle" class="card-title">Confluence tree</text>
+  <rect x="932" y="244" width="330" height="72" rx="18" class="folder"/>
+  <text x="958" y="287" class="copy">Configured parent page</text>
+  <rect x="966" y="334" width="296" height="64" rx="16" class="folder"/>
+  <text x="992" y="372" class="copy">01 Architecture overview</text>
+  <rect x="1000" y="414" width="262" height="58" rx="14" class="file"/>
+  <text x="1024" y="449" class="copy" style="font-size:18px;">01 System context and module map.md</text>
+  <rect x="1000" y="486" width="262" height="58" rx="14" class="file"/>
+  <text x="1024" y="521" class="copy" style="font-size:18px;">02 Publish lifecycle and sync model.md</text>
+  <rect x="966" y="566" width="296" height="64" rx="16" class="folder"/>
+  <text x="992" y="604" class="copy">03 Confluence integration</text>
+
+  <path d="M510 410 C640 410 760 410 890 410" class="arrow"/>
+
+  <rect x="560" y="250" width="280" height="170" rx="24" class="panel"/>
+  <circle cx="610" cy="305" r="16" class="badge-a"/>
+  <text x="640" y="312" class="card-title" style="font-size:22px;">Directory rule</text>
+  <text x="590" y="352" class="copy" style="font-size:18px;">Create or update a folder page</text>
+  <text x="590" y="380" class="note">Body is the Children macro.</text>
+
+  <rect x="560" y="438" width="280" height="170" rx="24" class="panel"/>
+  <circle cx="610" cy="493" r="16" class="badge-b"/>
+  <text x="640" y="500" class="card-title" style="font-size:22px;">File rule</text>
+  <text x="590" y="540" class="copy" style="font-size:18px;">Create or update a page titled</text>
+  <text x="590" y="568" class="copy" style="font-size:18px;">exactly like the filename.</text>
+
+  <rect x="250" y="700" width="900" height="44" rx="16" fill="#17324d" opacity="0.93"/>
+  <text x="700" y="729" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#f8f4ed">Upserts match by direct parent plus title, so dedicate the parent page to generated content.</text>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Markdown image rewrite pipeline</title>
+  <desc id="desc">Local markdown image syntax is rewritten into Confluence attachment storage XML and then uploaded from the image root.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f2e8"/>
+      <stop offset="100%" stop-color="#dfeaec"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L14,7 L0,14 z" fill="#35516a"/>
+    </marker>
+    <style>
+      .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #486377; }
+      .panel { fill: #ffffff; stroke: #d8d1c8; stroke-width: 2.5; }
+      .soft { fill: #eef4f5; stroke: #bfd0d4; stroke-width: 1.6; }
+      .warn { fill: #fcf4eb; stroke: #e9c49f; stroke-width: 1.6; }
+      .card-title { font: 700 25px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .copy { font: 500 19px Helvetica, Arial, sans-serif; fill: #405b71; }
+      .note { font: 500 17px Helvetica, Arial, sans-serif; fill: #617484; }
+      .code { font: 500 19px 'Courier New', Courier, monospace; fill: #17324d; }
+      .arrow { fill: none; stroke: #35516a; stroke-width: 5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1400" height="760" fill="url(#bg)"/>
+  <text x="700" y="66" text-anchor="middle" class="title">Markdown Image Rewrite Pipeline</text>
+  <text x="700" y="102" text-anchor="middle" class="subtitle">Local image syntax becomes attachment XML. Remote image URLs pass straight through.</text>
+
+  <rect x="70" y="170" width="360" height="470" rx="28" class="panel"/>
+  <text x="250" y="224" text-anchor="middle" class="card-title">1. Markdown input</text>
+  <rect x="106" y="264" width="286" height="116" rx="18" class="soft"/>
+  <text x="128" y="306" class="code">![diagram](/data_images/</text>
+  <text x="128" y="334" class="code">publish-lifecycle-current.svg)</text>
+  <rect x="106" y="402" width="286" height="116" rx="18" class="warn"/>
+  <text x="128" y="444" class="code">![remote](https://example.com/</text>
+  <text x="128" y="472" class="code">image.png)</text>
+  <text x="104" y="575" class="note">Only non-http and non-https paths are treated as local attachment candidates.</text>
+
+  <rect x="520" y="170" width="360" height="470" rx="28" class="panel"/>
+  <text x="700" y="224" text-anchor="middle" class="card-title">2. Rewrite and convert</text>
+  <rect x="556" y="264" width="286" height="98" rx="18" class="soft"/>
+  <text x="580" y="304" class="copy">Extract basename</text>
+  <text x="580" y="332" class="note">`publish-lifecycle-current.svg` is kept, path segments are dropped.</text>
+  <rect x="556" y="382" width="286" height="98" rx="18" class="soft"/>
+  <text x="580" y="422" class="copy">Insert storage XML</text>
+  <text x="580" y="450" class="note">`ri:attachment` replaces the local Markdown image syntax.</text>
+  <rect x="556" y="500" width="286" height="98" rx="18" class="warn"/>
+  <text x="580" y="540" class="copy">Line-based parser</text>
+  <text x="580" y="568" class="note">Split syntax or duplicate basenames can cause surprises.</text>
+
+  <rect x="970" y="170" width="360" height="470" rx="28" class="panel"/>
+  <text x="1150" y="224" text-anchor="middle" class="card-title">3. Page body and attachments</text>
+  <rect x="1006" y="264" width="286" height="116" rx="18" class="soft"/>
+  <text x="1028" y="306" class="code">&lt;ac:image&gt;&lt;ri:attachment</text>
+  <text x="1028" y="334" class="code">ri:filename="publish-lifecycle-current.svg"/&gt;</text>
+  <rect x="1006" y="402" width="286" height="116" rx="18" class="soft"/>
+  <text x="1028" y="444" class="copy">Upload from image root</text>
+  <text x="1028" y="472" class="note">`github_folder_with_image_files/publish-lifecycle-current.svg`</text>
+  <text x="1004" y="575" class="note">Missing files log an error, but the page body still publishes.</text>
+
+  <path d="M430 406 C470 406 480 406 520 406" class="arrow"/>
+  <path d="M880 406 C920 406 930 406 970 406" class="arrow"/>
+
+  <rect x="320" y="690" width="760" height="42" rx="16" fill="#17324d" opacity="0.93"/>
+  <text x="700" y="718" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#f8f4ed">Authoring rule: keep image references on one line and give attachment files unique basenames.</text>
+</svg>

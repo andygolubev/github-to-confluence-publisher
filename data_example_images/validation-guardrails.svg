@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="780" viewBox="0 0 1400 780" role="img" aria-labelledby="title desc">
+  <title id="title">Validation and guardrails</title>
+  <desc id="desc">Configuration validation, parent page verification, TLS handling, and response validation work together to fail early or publish safely.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f2e8"/>
+      <stop offset="100%" stop-color="#dfeaec"/>
+    </linearGradient>
+    <style>
+      .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #486377; }
+      .card { fill: #ffffff; stroke: #d8d1c8; stroke-width: 2.5; }
+      .soft { fill: #eef4f5; stroke: #bfd0d4; stroke-width: 1.6; }
+      .warn { fill: #fcf4eb; stroke: #e9c49f; stroke-width: 1.6; }
+      .good { fill: #eef7f3; stroke: #bcd8cc; stroke-width: 1.6; }
+      .card-title { font: 700 24px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .copy { font: 500 19px Helvetica, Arial, sans-serif; fill: #405b71; }
+      .note { font: 500 17px Helvetica, Arial, sans-serif; fill: #617484; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="780" fill="url(#bg)"/>
+  <text x="700" y="66" text-anchor="middle" class="title">Validation and Guardrails</text>
+  <text x="700" y="102" text-anchor="middle" class="subtitle">The publisher aims to fail early on bad inputs and stay strict about transport security and API payloads.</text>
+
+  <rect x="110" y="170" width="350" height="172" rx="24" class="card"/>
+  <rect x="140" y="206" width="290" height="102" rx="18" class="soft"/>
+  <text x="164" y="246" class="card-title">Credentials and config</text>
+  <text x="164" y="276" class="copy">Reject empty login or token.</text>
+  <text x="164" y="304" class="note">Validate space keys and numeric parent ids.</text>
+
+  <rect x="525" y="170" width="350" height="172" rx="24" class="card"/>
+  <rect x="555" y="206" width="290" height="102" rx="18" class="soft"/>
+  <text x="579" y="246" class="card-title">URL normalization</text>
+  <text x="579" y="276" class="copy">Turn wiki URLs into REST API bases.</text>
+  <text x="579" y="304" class="note">Cloud and server-style paths are both covered.</text>
+
+  <rect x="940" y="170" width="350" height="172" rx="24" class="card"/>
+  <rect x="970" y="206" width="290" height="102" rx="18" class="warn"/>
+  <text x="994" y="246" class="card-title">Parent page verification</text>
+  <text x="994" y="276" class="copy">Fail before writes if the ancestor is missing.</text>
+  <text x="994" y="304" class="note">Space mismatches warn instead of hard-failing.</text>
+
+  <rect x="110" y="388" width="350" height="172" rx="24" class="card"/>
+  <rect x="140" y="424" width="290" height="102" rx="18" class="good"/>
+  <text x="164" y="464" class="card-title">TLS handling</text>
+  <text x="164" y="494" class="copy">Use the system trust store only.</text>
+  <text x="164" y="522" class="note">Mounted custom CAs are activated by the entrypoint.</text>
+
+  <rect x="525" y="388" width="350" height="172" rx="24" class="card"/>
+  <rect x="555" y="424" width="290" height="102" rx="18" class="warn"/>
+  <text x="579" y="464" class="card-title">Response validation</text>
+  <text x="579" y="494" class="copy">Detect HTML where JSON was expected.</text>
+  <text x="579" y="522" class="note">Pydantic models catch malformed API payloads.</text>
+
+  <rect x="940" y="388" width="350" height="172" rx="24" class="card"/>
+  <rect x="970" y="424" width="290" height="102" rx="18" class="good"/>
+  <text x="994" y="464" class="card-title">Tests and safe defaults</text>
+  <text x="994" y="494" class="copy">Unit tests cover config, search, updates, and images.</text>
+  <text x="994" y="522" class="note">Repeated property writes tolerate HTTP 409 conflicts.</text>
+
+  <rect x="240" y="612" width="920" height="104" rx="24" class="card"/>
+  <text x="700" y="656" text-anchor="middle" class="card-title">Result</text>
+  <text x="700" y="688" text-anchor="middle" class="copy">When inputs are wrong, the run fails with a targeted error. When inputs are valid, the publish path stays strict about TLS and response shape.</text>
+</svg>

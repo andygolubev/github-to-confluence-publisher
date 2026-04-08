@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="840" viewBox="0 0 1400 840" role="img" aria-labelledby="title desc">
+  <title id="title">Publisher system map</title>
+  <desc id="desc">Repository inputs flow through a publisher runtime into Confluence pages, attachments, and content properties.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6f1e7"/>
+      <stop offset="100%" stop-color="#dbe7ea"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L14,7 L0,14 z" fill="#38536b"/>
+    </marker>
+    <style>
+      .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #415a70; }
+      .card { fill: #ffffff; stroke: #d7d2c8; stroke-width: 2.5; }
+      .card-title { font: 700 26px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .copy { font: 500 20px Helvetica, Arial, sans-serif; fill: #355066; }
+      .note { font: 500 18px Helvetica, Arial, sans-serif; fill: #5d6f7f; }
+      .pill { fill: #f1f6f7; stroke: #b8cad0; stroke-width: 1.5; }
+      .accent-a { fill: #db7f3b; }
+      .accent-b { fill: #2f7a78; }
+      .accent-c { fill: #587a9b; }
+      .arrow { fill: none; stroke: #38536b; stroke-width: 5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1400" height="840" fill="url(#bg)"/>
+
+  <text x="700" y="72" text-anchor="middle" class="title">Publisher System Map</text>
+  <text x="700" y="108" text-anchor="middle" class="subtitle">One batch run reads repository content, transforms it, and syncs the result into Confluence.</text>
+
+  <rect x="70" y="155" width="360" height="540" rx="30" class="card"/>
+  <circle cx="128" cy="217" r="18" class="accent-a"/>
+  <text x="164" y="226" class="card-title">Repository Inputs</text>
+  <rect x="106" y="265" width="286" height="92" rx="20" class="pill"/>
+  <text x="132" y="302" class="copy">Markdown tree</text>
+  <text x="132" y="333" class="note">`data_example/` becomes the page hierarchy.</text>
+  <rect x="106" y="376" width="286" height="92" rx="20" class="pill"/>
+  <text x="132" y="413" class="copy">Image root</text>
+  <text x="132" y="444" class="note">`data_example_images/` provides attachment files.</text>
+  <rect x="106" y="487" width="286" height="92" rx="20" class="pill"/>
+  <text x="132" y="524" class="copy">Config and workflow files</text>
+  <text x="132" y="555" class="note">YAML, env vars, Dockerfile, and Actions drive runtime.</text>
+  <text x="102" y="633" class="note">Source of truth stays in Git, not Confluence.</text>
+
+  <rect x="520" y="125" width="360" height="600" rx="30" class="card"/>
+  <circle cx="578" cy="187" r="18" class="accent-b"/>
+  <text x="614" y="196" class="card-title">Publisher Runtime</text>
+  <rect x="556" y="238" width="286" height="88" rx="20" class="pill"/>
+  <text x="582" y="274" class="copy">`main.py`</text>
+  <text x="582" y="303" class="note">Resolves credentials, dry-run, and orchestration.</text>
+  <rect x="556" y="344" width="286" height="88" rx="20" class="pill"/>
+  <text x="582" y="380" class="copy">`getconfig.py`</text>
+  <text x="582" y="409" class="note">Loads YAML, normalizes URL, applies overrides.</text>
+  <rect x="556" y="450" width="286" height="88" rx="20" class="pill"/>
+  <text x="582" y="486" class="copy">`pagesPublisher.py`</text>
+  <text x="582" y="515" class="note">Walks folders, converts Markdown, uploads files.</text>
+  <rect x="556" y="556" width="286" height="88" rx="20" class="pill"/>
+  <text x="582" y="592" class="copy">`pagesController.py`</text>
+  <text x="582" y="621" class="note">Verifies, searches, creates, updates, tags, deletes.</text>
+  <text x="554" y="686" class="note">Batch CLI only. No daemon, cache, or local database.</text>
+
+  <rect x="970" y="155" width="360" height="540" rx="30" class="card"/>
+  <circle cx="1028" cy="217" r="18" class="accent-c"/>
+  <text x="1064" y="226" class="card-title">Confluence Target</text>
+  <rect x="1006" y="265" width="286" height="92" rx="20" class="pill"/>
+  <text x="1032" y="302" class="copy">Folder pages</text>
+  <text x="1032" y="333" class="note">Directories become children-macro pages.</text>
+  <rect x="1006" y="376" width="286" height="92" rx="20" class="pill"/>
+  <text x="1032" y="413" class="copy">Markdown pages</text>
+  <text x="1032" y="444" class="note">Each `.md` file becomes one content page.</text>
+  <rect x="1006" y="487" width="286" height="92" rx="20" class="pill"/>
+  <text x="1032" y="524" class="copy">Attachments and properties</text>
+  <text x="1032" y="555" class="note">Uploaded files plus hidden publisher metadata.</text>
+  <text x="1002" y="633" class="note">All content hangs beneath one existing parent page.</text>
+
+  <path d="M430 425 C470 425 480 425 520 425" class="arrow"/>
+  <path d="M880 425 C920 425 930 425 970 425" class="arrow"/>
+
+  <rect x="268" y="738" width="864" height="60" rx="20" fill="#17324d" opacity="0.92"/>
+  <text x="700" y="777" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#f9f6ef">Current sync model: verify, upsert current tree, then prune stale generated ids.</text>
+</svg>

@@ -1,27 +1,37 @@
-# Publisher architecture (sample docs)
+# GitHub to Confluence publisher reference set
 
-This tree is **example content** for the GitHub to Confluence publisher. It mirrors how real teams document an internal tool: overview first, then runtime, then integration details.
+This `data_example/` tree is a project-shaped documentation set for the publisher itself. It is written against the current Python code, Docker packaging, and GitHub Actions workflow in this repository.
 
-| Section | What you will find |
-|--------|---------------------|
-| **01 Architecture overview** | System context and the ordered steps of one publish run |
-| **02 Runtime and deployment** | Docker inputs, env vars, and automation |
-| **03 Confluence integration** | How folders map to pages, how cleanup works, how images attach |
+## Why this sample tree exists
 
-The diagrams below live in `data_example_images/` and are referenced from Markdown as `/data_images/<filename>` — the same pattern the publisher expects when rewriting lines to Confluence `ac:image` attachments.
+- Every directory becomes a Confluence folder page with a Children macro.
+- Every Markdown file becomes a page whose title is the full filename, including `.md`.
+- Every local image reference becomes an attachment lookup by filename under `data_example_images/`.
 
-## At a glance
+That makes this folder a realistic smoke test for navigation, hierarchy, Markdown conversion, and attachment uploads.
 
-![System context: Git repo, publisher, Confluence](/data_images/architecture-overview.svg)
+![Publisher system map](/data_images/publisher-system-map.svg)
 
-**Source of truth:** Git. **Target:** Pages under a configured Confluence parent. **Model:** Full refresh each run (delete previously tagged pages, then recreate from disk).
+## Section map
 
-## Where to read next
+| Section | Focus | Main code paths |
+|---|---|---|
+| `01 Architecture overview` | Modules, data flow, and sync lifecycle | `publisher/main.py`, `publisher/pagesPublisher.py`, `publisher/pagesController.py` |
+| `02 Runtime and deployment` | Config precedence, Docker runtime, GitHub Actions | `publisher/config/getconfig.py`, `Dockerfile`, `.github/workflows/publisher.yml` |
+| `03 Confluence integration` | Hierarchy mapping, upserts, properties, attachments | `publisher/pagesController.py`, `publisher/pagesPublisher.py` |
+| `04 Reliability and limits` | Validation, TLS, tests, and edge cases | `publisher/test_*.py`, `publisher/config/confluence_url.py` |
 
-Under this parent in Confluence, open the numbered sections (they mirror subfolders in Git):
+## Current operating model
 
-1. **01 Architecture overview** — system context + ordered publish steps (with diagrams)  
-2. **02 Runtime and deployment** — Docker, secrets, volumes, config  
-3. **03 Confluence integration** — folder mapping, content properties, images  
+The publisher is a batch job, not a service. A normal run does four high-level things:
 
-For the canonical technical write-up in this repository, see `openspec/architecture.md`.
+1. Resolve credentials and load config.
+2. Verify the configured parent page and snapshot existing generated descendants.
+3. Walk the Markdown tree and upsert folder pages, Markdown pages, and attachments.
+4. Delete stale generated pages that existed before the run but were not republished.
+
+This is an upsert-plus-prune model, not a blind delete-and-recreate pass.
+
+## Reading order
+
+Open the numbered sections in order. Numeric prefixes are deliberate because `os.scandir()` does not guarantee lexical ordering.

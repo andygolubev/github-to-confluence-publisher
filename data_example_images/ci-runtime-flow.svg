@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">CI workflow and container flow</title>
+  <desc id="desc">GitHub Actions checks out the repo, builds the image, runs tests, optionally verifies Confluence access, and publishes the example content.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7f2e8"/>
+      <stop offset="100%" stop-color="#dfeaec"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L14,7 L0,14 z" fill="#35516a"/>
+    </marker>
+    <style>
+      .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #486377; }
+      .step { fill: #ffffff; stroke: #d8d1c8; stroke-width: 2.5; }
+      .lane { fill: #eef4f5; stroke: #bfd0d4; stroke-width: 1.6; }
+      .card-title { font: 700 23px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .copy { font: 500 18px Helvetica, Arial, sans-serif; fill: #405b71; }
+      .note { font: 500 17px Helvetica, Arial, sans-serif; fill: #617484; }
+      .arrow { fill: none; stroke: #35516a; stroke-width: 5; marker-end: url(#arrow); }
+      .accent-a { fill: #d67933; }
+      .accent-b { fill: #2f7a78; }
+      .accent-c { fill: #597a9b; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="760" fill="url(#bg)"/>
+  <text x="700" y="66" text-anchor="middle" class="title">CI Workflow and Container Flow</text>
+  <text x="700" y="102" text-anchor="middle" class="subtitle">The same image runs unit tests, smoke checks, and the example publish job inside GitHub Actions.</text>
+
+  <rect x="70" y="150" width="1260" height="120" rx="24" class="lane"/>
+  <text x="110" y="220" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#17324d">GitHub Actions lane</text>
+
+  <rect x="90" y="330" width="200" height="200" rx="24" class="step"/>
+  <circle cx="136" cy="378" r="18" class="accent-a"/>
+  <text x="166" y="386" class="card-title">Checkout</text>
+  <text x="118" y="432" class="copy">Fetch the repository</text>
+  <text x="118" y="462" class="copy">contents for the job.</text>
+
+  <rect x="330" y="330" width="200" height="200" rx="24" class="step"/>
+  <circle cx="376" cy="378" r="18" class="accent-b"/>
+  <text x="406" y="386" class="card-title">Build image</text>
+  <text x="358" y="432" class="copy">Create the Docker image</text>
+  <text x="358" y="462" class="copy">tagged with the commit SHA.</text>
+
+  <rect x="570" y="330" width="200" height="200" rx="24" class="step"/>
+  <circle cx="616" cy="378" r="18" class="accent-c"/>
+  <text x="646" y="386" class="card-title">Unit tests</text>
+  <text x="598" y="432" class="copy">Run `unittest` inside</text>
+  <text x="598" y="462" class="copy">the built container image.</text>
+
+  <rect x="810" y="330" width="220" height="200" rx="24" class="step"/>
+  <circle cx="856" cy="378" r="18" class="accent-a"/>
+  <text x="886" y="386" class="card-title">Smoke test</text>
+  <text x="838" y="432" class="copy">Ping the Confluence API</text>
+  <text x="838" y="462" class="copy">when secrets are available.</text>
+
+  <rect x="1070" y="330" width="240" height="200" rx="24" class="step"/>
+  <circle cx="1116" cy="378" r="18" class="accent-b"/>
+  <text x="1146" y="386" class="card-title">Publish example tree</text>
+  <text x="1098" y="432" class="copy">Mount `data_example/`</text>
+  <text x="1098" y="462" class="copy">and `data_example_images/`.</text>
+
+  <path d="M290 430 L330 430" class="arrow"/>
+  <path d="M530 430 L570 430" class="arrow"/>
+  <path d="M770 430 L810 430" class="arrow"/>
+  <path d="M1030 430 L1070 430" class="arrow"/>
+
+  <rect x="160" y="590" width="1080" height="104" rx="24" class="step"/>
+  <text x="200" y="636" class="card-title">Operational notes</text>
+  <text x="200" y="670" class="copy">Fork pull requests still run tests, but live Confluence steps are skipped because repository secrets are unavailable.</text>
+  <text x="200" y="698" class="note">The same container entrypoint refreshes CA certificates before any smoke test or publish call.</text>
+</svg>
