@@ -2,9 +2,9 @@ name: Publish
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main" , "refactor-publisher"]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main" , "refactor-publisher"]
 
 permissions:
   contents: read
