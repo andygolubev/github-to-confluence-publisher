@@ -146,10 +146,11 @@ docker run --rm \
 
 ### Custom CA certificates (self-hosted Confluence)
 
-If your Confluence instance uses an internal CA, mount the certificate and it will be picked up automatically:
+If your Confluence instance uses an internal CA, mount the certificate and set `REQUESTS_CA_BUNDLE`:
 
 ```bash
--v ./my-ca.crt:/usr/local/share/ca-certificates/custom/my-ca.crt:ro
+-v ./my-ca.crt:/certs/my-ca.crt:ro \
+-e REQUESTS_CA_BUNDLE=/certs/my-ca.crt
 ```
 
 ---

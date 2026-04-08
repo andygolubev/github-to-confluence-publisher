@@ -8,10 +8,19 @@ The repository ships one container image and one GitHub Actions workflow. Togeth
 
 | Artifact | Purpose |
 |---|---|
-| `Dockerfile` | Builds a `python:3.14-slim` image, installs `ca-certificates`, installs Python dependencies, and copies the `publisher/` package |
-| `publisher/docker_entrypoint.py` | Runs `update-ca-certificates`, then `exec()`s `publisher/main.py` |
+| `Dockerfile` | Builds a `python:3.14-slim` image, installs Python dependencies, creates a non-root `publisher` user, and copies the `publisher/` package |
 | Mounted `/app/data` | Default Markdown root inside the container |
 | Mounted `/app/data_images` | Default image root inside the container |
+
+## Container security
+
+The image follows Docker security best practices:
+
+- **Non-root user** — runs as `publisher` (UID 10001), never as root
+- **Read-only filesystem** — the container needs no writable layers; use `--read-only --tmpfs /tmp`
+- **Dropped capabilities** — CI runs with `--cap-drop=ALL --security-opt=no-new-privileges`
+- **No secrets in the image** — credentials are passed via environment variables at runtime
+- **Minimal base** — `python:3.14-slim` with only `ca-certificates` added
 
 ## Workflow stages
 
@@ -27,12 +36,18 @@ The workflow skips live Confluence steps on fork pull requests because GitHub do
 
 ## TLS and custom certificates
 
-The container trusts the system CA store by default. For private Confluence instances or corporate proxies, mount `.crt` files into `/usr/local/share/ca-certificates/custom/` or set `REQUESTS_CA_BUNDLE` or `SSL_CERT_FILE`.
+The container trusts the system CA store by default. For private Confluence instances or corporate proxies, mount a PEM file and set the `REQUESTS_CA_BUNDLE` or `SSL_CERT_FILE` environment variable:
+
+```bash
+-v ./my-ca.crt:/certs/my-ca.crt:ro -e REQUESTS_CA_BUNDLE=/certs/my-ca.crt
+```
 
 ## Local equivalent
 
 ```bash
 docker run --rm \
+  --read-only --tmpfs /tmp \
+  --security-opt=no-new-privileges --cap-drop=ALL \
   -e CONFLUENCE_URL=... \
   -e CONFLUENCE_SPACE=... \
   -e CONFLUENCE_PARENT_PAGE_ID=... \

@@ -18,7 +18,7 @@ The publisher tries to fail early on configuration mistakes and malformed API re
 
 ## TLS details
 
-The code never disables certificate verification. Requests use the system trust store, and the container entrypoint refreshes that store so mounted custom CAs become active before any Confluence call.
+The code never disables certificate verification. Requests use the system trust store by default. For custom CAs, mount a PEM file and set `REQUESTS_CA_BUNDLE` or `SSL_CERT_FILE` to point at it.
 
 ## Failure shapes you should expect
 

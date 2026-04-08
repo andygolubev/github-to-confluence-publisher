@@ -26,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
 
     # Repository/org secrets are empty on pull_request workflows from forks — skip Confluence steps there.
-    # Set all values below via repository variables/secrets (Settings → Secrets and variables → Actions).
     env:
       CONFLUENCE_URL: https://testbot.atlassian.net/wiki/rest/api/
       CONFLUENCE_SPACE: newpublish
@@ -49,6 +48,10 @@ jobs:
     - name: Run unit tests
       run: |
         docker run --rm \
+          --read-only \
+          --tmpfs /tmp \
+          --security-opt=no-new-privileges \
+          --cap-drop=ALL \
           --entrypoint python \
           confluence-publisher:${{ github.sha }} \
           -m unittest discover -s /app/publisher -p "test_*.py" -v
@@ -57,6 +60,10 @@ jobs:
       if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false }}
       run: |
         docker run --rm \
+          --read-only \
+          --tmpfs /tmp \
+          --security-opt=no-new-privileges \
+          --cap-drop=ALL \
           --entrypoint python \
           -e CONFLUENCE_URL \
           -e CONFLUENCE_SPACE \
@@ -73,6 +80,10 @@ jobs:
       if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false }}
       run: |
         docker run --rm \
+          --read-only \
+          --tmpfs /tmp \
+          --security-opt=no-new-privileges \
+          --cap-drop=ALL \
           -e CONFLUENCE_URL \
           -e CONFLUENCE_SPACE \
           -e CONFLUENCE_PARENT_PAGE_ID \
