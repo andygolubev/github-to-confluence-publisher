@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="860" viewBox="0 0 1500 860" role="img" aria-labelledby="title desc">
   <title id="title">Publish lifecycle</title>
-  <desc id="desc">Ordered diagram showing verify, snapshot, upsert, attachment upload, and stale-page pruning.</desc>
+  <desc id="desc">The publisher verifies configuration, snapshots generated ids, upserts the current tree, and prunes stale pages.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#f8f4eb"/>
@@ -13,78 +13,68 @@
       .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
       .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #456176; }
       .step { fill: #ffffff; stroke: #d7d1c8; stroke-width: 2.5; }
-      .step-title { font: 700 23px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .step-title { font: 700 24px Helvetica, Arial, sans-serif; fill: #17324d; }
       .copy { font: 500 18px Helvetica, Arial, sans-serif; fill: #405b71; }
       .badge { fill: #d97732; }
       .badge-text { font: 700 18px Helvetica, Arial, sans-serif; fill: #ffffff; }
       .arrow { fill: none; stroke: #36516a; stroke-width: 5; marker-end: url(#arrow); }
-      .footer { fill: #17324d; opacity: 0.94; }
     </style>
   </defs>
 
-  <rect width="1400" height="760" fill="url(#bg)"/>
-  <text x="700" y="68" text-anchor="middle" class="title">Publish Lifecycle</text>
-  <text x="700" y="104" text-anchor="middle" class="subtitle">Current behavior is upsert plus prune: keep matching ids, remove only stale generated pages.</text>
+  <rect width="1500" height="860" fill="url(#bg)"/>
+  <text x="750" y="68" text-anchor="middle" class="title">Publish Lifecycle</text>
+  <text x="750" y="104" text-anchor="middle" class="subtitle">The current implementation is upsert plus prune, not delete and recreate.</text>
 
-  <rect x="60" y="190" width="200" height="210" rx="24" class="step"/>
-  <circle cx="106" cy="236" r="20" class="badge"/>
-  <text x="106" y="242" text-anchor="middle" class="badge-text">1</text>
-  <text x="138" y="242" class="step-title">Resolve inputs</text>
-  <text x="90" y="293" class="copy">Credentials from CLI</text>
-  <text x="90" y="323" class="copy">or env, config from</text>
-  <text x="90" y="353" class="copy">YAML and overrides.</text>
+  <rect x="90" y="180" width="360" height="170" rx="24" class="step"/>
+  <circle cx="144" cy="234" r="20" class="badge"/>
+  <text x="144" y="240" text-anchor="middle" class="badge-text">1</text>
+  <text x="178" y="240" class="step-title">Resolve inputs</text>
+  <text x="122" y="286" class="copy">Read credentials from CLI or env.</text>
+  <text x="122" y="316" class="copy">Load config and apply overrides.</text>
 
-  <rect x="290" y="190" width="200" height="210" rx="24" class="step"/>
-  <circle cx="336" cy="236" r="20" class="badge"/>
-  <text x="336" y="242" text-anchor="middle" class="badge-text">2</text>
-  <text x="368" y="242" class="step-title">Verify parent</text>
-  <text x="320" y="293" class="copy">Fail fast if the</text>
-  <text x="320" y="323" class="copy">ancestor id or API</text>
-  <text x="320" y="353" class="copy">URL is wrong.</text>
+  <rect x="570" y="180" width="360" height="170" rx="24" class="step"/>
+  <circle cx="624" cy="234" r="20" class="badge"/>
+  <text x="624" y="240" text-anchor="middle" class="badge-text">2</text>
+  <text x="658" y="240" class="step-title">Verify parent page</text>
+  <text x="602" y="286" class="copy">Fail before writes when the</text>
+  <text x="602" y="316" class="copy">ancestor id or API base is wrong.</text>
 
-  <rect x="520" y="190" width="200" height="210" rx="24" class="step"/>
-  <circle cx="566" cy="236" r="20" class="badge"/>
-  <text x="566" y="242" text-anchor="middle" class="badge-text">3</text>
-  <text x="598" y="242" class="step-title">Snapshot existing</text>
-  <text x="550" y="293" class="copy">Search descendants,</text>
-  <text x="550" y="323" class="copy">filter by property,</text>
-  <text x="550" y="353" class="copy">keep the before set.</text>
+  <rect x="1050" y="180" width="360" height="170" rx="24" class="step"/>
+  <circle cx="1104" cy="234" r="20" class="badge"/>
+  <text x="1104" y="240" text-anchor="middle" class="badge-text">3</text>
+  <text x="1138" y="240" class="step-title">Snapshot generated ids</text>
+  <text x="1082" y="286" class="copy">Search descendants and keep</text>
+  <text x="1082" y="316" class="copy">only pages with the property key.</text>
 
-  <rect x="750" y="190" width="200" height="210" rx="24" class="step"/>
-  <circle cx="796" cy="236" r="20" class="badge"/>
-  <text x="796" y="242" text-anchor="middle" class="badge-text">4</text>
-  <text x="828" y="242" class="step-title">Walk and upsert</text>
-  <text x="780" y="293" class="copy">Directories become</text>
-  <text x="780" y="323" class="copy">folder pages, files</text>
-  <text x="780" y="353" class="copy">become content pages.</text>
+  <rect x="90" y="420" width="360" height="170" rx="24" class="step"/>
+  <circle cx="144" cy="474" r="20" class="badge"/>
+  <text x="144" y="480" text-anchor="middle" class="badge-text">4</text>
+  <text x="178" y="480" class="step-title">Upsert the tree</text>
+  <text x="122" y="526" class="copy">Folders become navigation pages.</text>
+  <text x="122" y="556" class="copy">Markdown files become content pages.</text>
 
-  <rect x="980" y="190" width="200" height="210" rx="24" class="step"/>
-  <circle cx="1026" cy="236" r="20" class="badge"/>
-  <text x="1026" y="242" text-anchor="middle" class="badge-text">5</text>
-  <text x="1058" y="242" class="step-title">Attach and tag</text>
-  <text x="1010" y="293" class="copy">Upload referenced</text>
-  <text x="1010" y="323" class="copy">files and set the</text>
-  <text x="1010" y="353" class="copy">publisher property.</text>
+  <rect x="570" y="420" width="360" height="170" rx="24" class="step"/>
+  <circle cx="624" cy="474" r="20" class="badge"/>
+  <text x="624" y="480" text-anchor="middle" class="badge-text">5</text>
+  <text x="658" y="480" class="step-title">Attach and tag</text>
+  <text x="602" y="526" class="copy">Upload local files after the page exists.</text>
+  <text x="602" y="556" class="copy">Set the publisher property on each page.</text>
 
-  <rect x="1210" y="190" width="130" height="210" rx="24" class="step"/>
-  <circle cx="1250" cy="236" r="20" class="badge"/>
-  <text x="1250" y="242" text-anchor="middle" class="badge-text">6</text>
-  <text x="1232" y="276" class="step-title" style="font-size:21px;">Prune</text>
-  <text x="1228" y="318" class="copy">Delete only</text>
-  <text x="1228" y="348" class="copy">stale ids from</text>
-  <text x="1228" y="378" class="copy">the snapshot.</text>
+  <rect x="1050" y="420" width="360" height="170" rx="24" class="step"/>
+  <circle cx="1104" cy="474" r="20" class="badge"/>
+  <text x="1104" y="480" text-anchor="middle" class="badge-text">6</text>
+  <text x="1138" y="480" class="step-title">Prune stale ids</text>
+  <text x="1082" y="526" class="copy">Delete only ids from the snapshot</text>
+  <text x="1082" y="556" class="copy">that were not republished this run.</text>
 
-  <path d="M260 295 L290 295" class="arrow"/>
-  <path d="M490 295 L520 295" class="arrow"/>
-  <path d="M720 295 L750 295" class="arrow"/>
-  <path d="M950 295 L980 295" class="arrow"/>
-  <path d="M1180 295 L1210 295" class="arrow"/>
+  <path d="M450 265 L570 265" class="arrow"/>
+  <path d="M930 265 L1050 265" class="arrow"/>
+  <path d="M1230 350 C1230 390 1230 390 1230 420" class="arrow"/>
+  <path d="M1050 505 L930 505" class="arrow"/>
+  <path d="M570 505 L450 505" class="arrow"/>
 
-  <rect x="120" y="495" width="1160" height="170" rx="28" fill="#ffffff" stroke="#d7d1c8" stroke-width="2.5"/>
-  <text x="160" y="548" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#17324d">Key implication</text>
-  <text x="160" y="592" font-family="Helvetica, Arial, sans-serif" font-size="21" font-weight="500" fill="#405b71">Pages keep their ids when title and parent still match. Renames, moves, or removed files produce stale ids,</text>
-  <text x="160" y="624" font-family="Helvetica, Arial, sans-serif" font-size="21" font-weight="500" fill="#405b71">and those ids are deleted only after the current tree has been republished.</text>
-
-  <rect x="410" y="688" width="580" height="42" rx="16" class="footer"/>
-  <text x="700" y="716" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#f9f5ee">This is no longer a blind delete-and-recreate pipeline.</text>
+  <rect x="150" y="670" width="1200" height="120" rx="28" fill="#ffffff" stroke="#d7d1c8" stroke-width="2.5"/>
+  <text x="190" y="724" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#17324d">Key implication</text>
+  <text x="190" y="760" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#405b71">Ids stay stable while title and parent stay the same.</text>
+  <text x="190" y="788" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#405b71">Renames, moves, and deleted files become stale ids and are pruned after publish.</text>
 </svg>

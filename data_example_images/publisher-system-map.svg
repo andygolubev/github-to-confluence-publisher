@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="840" viewBox="0 0 1400 840" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="860" viewBox="0 0 1500 860" role="img" aria-labelledby="title desc">
   <title id="title">Publisher system map</title>
-  <desc id="desc">Repository inputs flow through a publisher runtime into Confluence pages, attachments, and content properties.</desc>
+  <desc id="desc">Repository inputs pass through the publisher runtime and become Confluence pages, attachments, and properties.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#f6f1e7"/>
@@ -12,11 +12,12 @@
     <style>
       .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
       .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #415a70; }
-      .card { fill: #ffffff; stroke: #d7d2c8; stroke-width: 2.5; }
-      .card-title { font: 700 26px Helvetica, Arial, sans-serif; fill: #17324d; }
-      .copy { font: 500 20px Helvetica, Arial, sans-serif; fill: #355066; }
-      .note { font: 500 18px Helvetica, Arial, sans-serif; fill: #5d6f7f; }
-      .pill { fill: #f1f6f7; stroke: #b8cad0; stroke-width: 1.5; }
+      .panel { fill: #ffffff; stroke: #d7d2c8; stroke-width: 2.5; }
+      .tile { fill: #f1f6f7; stroke: #b8cad0; stroke-width: 1.5; }
+      .panel-title { font: 700 28px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .tile-title { font: 700 20px Helvetica, Arial, sans-serif; fill: #355066; }
+      .copy { font: 500 16px Helvetica, Arial, sans-serif; fill: #5d6f7f; }
+      .note { font: 500 17px Helvetica, Arial, sans-serif; fill: #4d6579; }
       .accent-a { fill: #db7f3b; }
       .accent-b { fill: #2f7a78; }
       .accent-c { fill: #587a9b; }
@@ -24,59 +25,68 @@
     </style>
   </defs>
 
-  <rect width="1400" height="840" fill="url(#bg)"/>
+  <rect width="1500" height="860" fill="url(#bg)"/>
+  <text x="750" y="72" text-anchor="middle" class="title">Publisher System Map</text>
+  <text x="750" y="108" text-anchor="middle" class="subtitle">Git content becomes Confluence pages through one batch sync run.</text>
 
-  <text x="700" y="72" text-anchor="middle" class="title">Publisher System Map</text>
-  <text x="700" y="108" text-anchor="middle" class="subtitle">One batch run reads repository content, transforms it, and syncs the result into Confluence.</text>
+  <rect x="70" y="155" width="380" height="570" rx="30" class="panel"/>
+  <circle cx="126" cy="214" r="18" class="accent-a"/>
+  <text x="160" y="224" class="panel-title">Repository Inputs</text>
+  <rect x="106" y="260" width="308" height="104" rx="20" class="tile"/>
+  <text x="132" y="298" class="tile-title">Markdown tree</text>
+  <text x="132" y="327" class="copy">`data_example/` becomes the</text>
+  <text x="132" y="350" class="copy">published page hierarchy.</text>
+  <rect x="106" y="386" width="308" height="104" rx="20" class="tile"/>
+  <text x="132" y="424" class="tile-title">Image root</text>
+  <text x="132" y="453" class="copy">`data_example_images/`</text>
+  <text x="132" y="476" class="copy">supplies attachment files.</text>
+  <rect x="106" y="512" width="308" height="104" rx="20" class="tile"/>
+  <text x="132" y="550" class="tile-title">Config and CI</text>
+  <text x="132" y="579" class="copy">YAML, env vars, Dockerfile,</text>
+  <text x="132" y="602" class="copy">and Actions define runtime.</text>
+  <text x="104" y="670" class="note">Git remains the source of truth.</text>
 
-  <rect x="70" y="155" width="360" height="540" rx="30" class="card"/>
-  <circle cx="128" cy="217" r="18" class="accent-a"/>
-  <text x="164" y="226" class="card-title">Repository Inputs</text>
-  <rect x="106" y="265" width="286" height="92" rx="20" class="pill"/>
-  <text x="132" y="302" class="copy">Markdown tree</text>
-  <text x="132" y="333" class="note">`data_example/` becomes the page hierarchy.</text>
-  <rect x="106" y="376" width="286" height="92" rx="20" class="pill"/>
-  <text x="132" y="413" class="copy">Image root</text>
-  <text x="132" y="444" class="note">`data_example_images/` provides attachment files.</text>
-  <rect x="106" y="487" width="286" height="92" rx="20" class="pill"/>
-  <text x="132" y="524" class="copy">Config and workflow files</text>
-  <text x="132" y="555" class="note">YAML, env vars, Dockerfile, and Actions drive runtime.</text>
-  <text x="102" y="633" class="note">Source of truth stays in Git, not Confluence.</text>
+  <rect x="560" y="125" width="380" height="600" rx="30" class="panel"/>
+  <circle cx="616" cy="184" r="18" class="accent-b"/>
+  <text x="650" y="194" class="panel-title">Publisher Runtime</text>
+  <rect x="596" y="232" width="308" height="94" rx="20" class="tile"/>
+  <text x="622" y="268" class="tile-title">`main.py`</text>
+  <text x="622" y="296" class="copy">Credentials, dry-run,</text>
+  <text x="622" y="319" class="copy">and top-level orchestration.</text>
+  <rect x="596" y="344" width="308" height="94" rx="20" class="tile"/>
+  <text x="622" y="380" class="tile-title">`getconfig.py`</text>
+  <text x="622" y="408" class="copy">Load YAML, normalize URL,</text>
+  <text x="622" y="431" class="copy">and apply env overrides.</text>
+  <rect x="596" y="456" width="308" height="94" rx="20" class="tile"/>
+  <text x="622" y="492" class="tile-title">`pagesPublisher.py`</text>
+  <text x="622" y="520" class="copy">Walk folders, convert Markdown,</text>
+  <text x="622" y="543" class="copy">and upload attachments.</text>
+  <rect x="596" y="568" width="308" height="94" rx="20" class="tile"/>
+  <text x="622" y="604" class="tile-title">`pagesController.py`</text>
+  <text x="622" y="632" class="copy">Verify, search, upsert,</text>
+  <text x="622" y="655" class="copy">tag, attach, and delete.</text>
 
-  <rect x="520" y="125" width="360" height="600" rx="30" class="card"/>
-  <circle cx="578" cy="187" r="18" class="accent-b"/>
-  <text x="614" y="196" class="card-title">Publisher Runtime</text>
-  <rect x="556" y="238" width="286" height="88" rx="20" class="pill"/>
-  <text x="582" y="274" class="copy">`main.py`</text>
-  <text x="582" y="303" class="note">Resolves credentials, dry-run, and orchestration.</text>
-  <rect x="556" y="344" width="286" height="88" rx="20" class="pill"/>
-  <text x="582" y="380" class="copy">`getconfig.py`</text>
-  <text x="582" y="409" class="note">Loads YAML, normalizes URL, applies overrides.</text>
-  <rect x="556" y="450" width="286" height="88" rx="20" class="pill"/>
-  <text x="582" y="486" class="copy">`pagesPublisher.py`</text>
-  <text x="582" y="515" class="note">Walks folders, converts Markdown, uploads files.</text>
-  <rect x="556" y="556" width="286" height="88" rx="20" class="pill"/>
-  <text x="582" y="592" class="copy">`pagesController.py`</text>
-  <text x="582" y="621" class="note">Verifies, searches, creates, updates, tags, deletes.</text>
-  <text x="554" y="686" class="note">Batch CLI only. No daemon, cache, or local database.</text>
+  <rect x="1050" y="155" width="380" height="570" rx="30" class="panel"/>
+  <circle cx="1106" cy="214" r="18" class="accent-c"/>
+  <text x="1140" y="224" class="panel-title">Confluence Target</text>
+  <rect x="1086" y="260" width="308" height="104" rx="20" class="tile"/>
+  <text x="1112" y="298" class="tile-title">Folder pages</text>
+  <text x="1112" y="327" class="copy">Directories become children</text>
+  <text x="1112" y="350" class="copy">macro navigation pages.</text>
+  <rect x="1086" y="386" width="308" height="104" rx="20" class="tile"/>
+  <text x="1112" y="424" class="tile-title">Markdown pages</text>
+  <text x="1112" y="453" class="copy">Each `.md` file becomes</text>
+  <text x="1112" y="476" class="copy">one content page.</text>
+  <rect x="1086" y="512" width="308" height="104" rx="20" class="tile"/>
+  <text x="1112" y="550" class="tile-title">Attachments and tags</text>
+  <text x="1112" y="579" class="copy">Uploaded files plus hidden</text>
+  <text x="1112" y="602" class="copy">publisher properties.</text>
+  <text x="1084" y="670" class="note">All content hangs under one parent page.</text>
 
-  <rect x="970" y="155" width="360" height="540" rx="30" class="card"/>
-  <circle cx="1028" cy="217" r="18" class="accent-c"/>
-  <text x="1064" y="226" class="card-title">Confluence Target</text>
-  <rect x="1006" y="265" width="286" height="92" rx="20" class="pill"/>
-  <text x="1032" y="302" class="copy">Folder pages</text>
-  <text x="1032" y="333" class="note">Directories become children-macro pages.</text>
-  <rect x="1006" y="376" width="286" height="92" rx="20" class="pill"/>
-  <text x="1032" y="413" class="copy">Markdown pages</text>
-  <text x="1032" y="444" class="note">Each `.md` file becomes one content page.</text>
-  <rect x="1006" y="487" width="286" height="92" rx="20" class="pill"/>
-  <text x="1032" y="524" class="copy">Attachments and properties</text>
-  <text x="1032" y="555" class="note">Uploaded files plus hidden publisher metadata.</text>
-  <text x="1002" y="633" class="note">All content hangs beneath one existing parent page.</text>
+  <path d="M450 430 C500 430 510 430 560 430" class="arrow"/>
+  <path d="M940 430 C990 430 1000 430 1050 430" class="arrow"/>
 
-  <path d="M430 425 C470 425 480 425 520 425" class="arrow"/>
-  <path d="M880 425 C920 425 930 425 970 425" class="arrow"/>
-
-  <rect x="268" y="738" width="864" height="60" rx="20" fill="#17324d" opacity="0.92"/>
-  <text x="700" y="777" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#f9f6ef">Current sync model: verify, upsert current tree, then prune stale generated ids.</text>
+  <rect x="280" y="760" width="940" height="64" rx="20" fill="#17324d" opacity="0.92"/>
+  <text x="750" y="790" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#f9f6ef">Current sync model</text>
+  <text x="750" y="814" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="500" fill="#f9f6ef">verify the parent, upsert the current tree, then prune stale generated ids</text>
 </svg>

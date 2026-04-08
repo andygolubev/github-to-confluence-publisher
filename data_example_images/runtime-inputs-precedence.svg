@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="780" viewBox="0 0 1400 780" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="840" viewBox="0 0 1500 840" role="img" aria-labelledby="title desc">
   <title id="title">Runtime inputs and precedence</title>
-  <desc id="desc">Diagram showing YAML, environment variables, CLI credentials, mounts, and TLS settings feeding the publisher runtime.</desc>
+  <desc id="desc">Local runs may start with YAML, but CI and container runs rely on environment variables and mounted roots.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#f7f2e8"/>
@@ -12,11 +12,12 @@
     <style>
       .title { font: 700 38px Helvetica, Arial, sans-serif; fill: #17324d; }
       .subtitle { font: 500 21px Helvetica, Arial, sans-serif; fill: #486377; }
-      .card { fill: #ffffff; stroke: #d7d1c8; stroke-width: 2.5; }
-      .small-card { fill: #f3f7f7; stroke: #bfd0d4; stroke-width: 1.7; }
-      .card-title { font: 700 24px Helvetica, Arial, sans-serif; fill: #17324d; }
-      .copy { font: 500 19px Helvetica, Arial, sans-serif; fill: #405b71; }
-      .note { font: 500 17px Helvetica, Arial, sans-serif; fill: #627484; }
+      .panel { fill: #ffffff; stroke: #d7d1c8; stroke-width: 2.5; }
+      .tile { fill: #f3f7f7; stroke: #bfd0d4; stroke-width: 1.7; }
+      .panel-title { font: 700 28px Helvetica, Arial, sans-serif; fill: #17324d; }
+      .tile-title { font: 700 20px Helvetica, Arial, sans-serif; fill: #405b71; }
+      .copy { font: 500 16px Helvetica, Arial, sans-serif; fill: #627484; }
+      .note { font: 500 17px Helvetica, Arial, sans-serif; fill: #4d6579; }
       .arrow { fill: none; stroke: #35516a; stroke-width: 5; marker-end: url(#arrow); }
       .accent-a { fill: #d67933; }
       .accent-b { fill: #2f7a78; }
@@ -24,56 +25,62 @@
     </style>
   </defs>
 
-  <rect width="1400" height="780" fill="url(#bg)"/>
-  <text x="700" y="66" text-anchor="middle" class="title">Runtime Inputs and Precedence</text>
-  <text x="700" y="102" text-anchor="middle" class="subtitle">Local runs can read YAML first. CI and Docker rely on environment variables plus mounted content roots.</text>
+  <rect width="1500" height="840" fill="url(#bg)"/>
+  <text x="750" y="66" text-anchor="middle" class="title">Runtime Inputs and Precedence</text>
+  <text x="750" y="102" text-anchor="middle" class="subtitle">Local runs may read YAML first. CI and Docker runs are env-first.</text>
 
-  <rect x="70" y="150" width="320" height="500" rx="28" class="card"/>
-  <circle cx="124" cy="208" r="18" class="accent-a"/>
-  <text x="158" y="217" class="card-title">Input surfaces</text>
-  <rect x="104" y="252" width="250" height="86" rx="18" class="small-card"/>
-  <text x="126" y="287" class="copy">`config.yaml`</text>
-  <text x="126" y="315" class="note">Used for local runs only.</text>
-  <rect x="104" y="354" width="250" height="86" rx="18" class="small-card"/>
-  <text x="126" y="389" class="copy">Environment variables</text>
-  <text x="126" y="417" class="note">Override URL, space, roots, banner, property key.</text>
-  <rect x="104" y="456" width="250" height="86" rx="18" class="small-card"/>
-  <text x="126" y="491" class="copy">CLI credentials</text>
-  <text x="126" y="519" class="note">`--login` and `--password` win over env credentials.</text>
-  <text x="102" y="593" class="note">Credentials are required even for `--dry-run`.</text>
+  <rect x="70" y="150" width="380" height="560" rx="28" class="panel"/>
+  <circle cx="126" cy="208" r="18" class="accent-a"/>
+  <text x="160" y="218" class="panel-title">Input surfaces</text>
+  <rect x="106" y="258" width="308" height="92" rx="18" class="tile"/>
+  <text x="132" y="294" class="tile-title">`config.yaml`</text>
+  <text x="132" y="321" class="copy">Local runs may start here.</text>
+  <rect x="106" y="372" width="308" height="92" rx="18" class="tile"/>
+  <text x="132" y="408" class="tile-title">Environment variables</text>
+  <text x="132" y="435" class="copy">Override URL, space, roots,</text>
+  <text x="132" y="458" class="copy">banner, and property key.</text>
+  <rect x="106" y="486" width="308" height="92" rx="18" class="tile"/>
+  <text x="132" y="522" class="tile-title">CLI credentials</text>
+  <text x="132" y="549" class="copy">`--login` and `--password`</text>
+  <text x="132" y="572" class="copy">override env credentials.</text>
+  <text x="104" y="642" class="note">Credentials are still required for `--dry-run`.</text>
 
-  <rect x="500" y="120" width="400" height="560" rx="30" class="card"/>
-  <circle cx="560" cy="182" r="18" class="accent-b"/>
-  <text x="596" y="191" class="card-title">Effective runtime</text>
-  <rect x="540" y="228" width="320" height="92" rx="18" class="small-card"/>
-  <text x="564" y="265" class="copy">`getConfig()`</text>
-  <text x="564" y="296" class="note">Loads YAML, migrates typo key, normalizes the REST API base.</text>
-  <rect x="540" y="340" width="320" height="92" rx="18" class="small-card"/>
-  <text x="564" y="377" class="copy">`docker_entrypoint.py`</text>
-  <text x="564" y="408" class="note">Refreshes CA certificates before the Python process starts.</text>
-  <rect x="540" y="452" width="320" height="92" rx="18" class="small-card"/>
-  <text x="564" y="489" class="copy">Mounted content roots</text>
-  <text x="564" y="520" class="note">Default container roots are `/app/data` and `/app/data_images`.</text>
-  <text x="538" y="593" class="note">Docker image note: `publisher/config/config.yaml` is not copied into the image.</text>
-  <text x="538" y="621" class="note">That is why CI depends on env vars, not bundled config files.</text>
+  <rect x="560" y="120" width="380" height="590" rx="30" class="panel"/>
+  <circle cx="616" cy="178" r="18" class="accent-b"/>
+  <text x="650" y="188" class="panel-title">Effective runtime</text>
+  <rect x="596" y="228" width="308" height="96" rx="18" class="tile"/>
+  <text x="622" y="264" class="tile-title">`getConfig()`</text>
+  <text x="622" y="291" class="copy">Load YAML, migrate the typo key,</text>
+  <text x="622" y="314" class="copy">and normalize the REST API base.</text>
+  <rect x="596" y="344" width="308" height="96" rx="18" class="tile"/>
+  <text x="622" y="380" class="tile-title">`docker_entrypoint.py`</text>
+  <text x="622" y="407" class="copy">Refresh CA certificates before</text>
+  <text x="622" y="430" class="copy">the Python process starts.</text>
+  <rect x="596" y="460" width="308" height="96" rx="18" class="tile"/>
+  <text x="622" y="496" class="tile-title">Mounted content roots</text>
+  <text x="622" y="523" class="copy">Container defaults are `/app/data`</text>
+  <text x="622" y="546" class="copy">and `/app/data_images`.</text>
+  <text x="594" y="618" class="note">The image does not ship `config.yaml`.</text>
+  <text x="594" y="643" class="note">That is why CI depends on env vars.</text>
 
-  <rect x="1010" y="150" width="320" height="500" rx="28" class="card"/>
-  <circle cx="1064" cy="208" r="18" class="accent-c"/>
-  <text x="1098" y="217" class="card-title">Outputs and safeguards</text>
-  <rect x="1044" y="252" width="250" height="86" rx="18" class="small-card"/>
-  <text x="1066" y="287" class="copy">Normalized Confluence target</text>
-  <text x="1066" y="315" class="note">Space key, parent id, and REST API base are ready to use.</text>
-  <rect x="1044" y="354" width="250" height="86" rx="18" class="small-card"/>
-  <text x="1066" y="389" class="copy">TLS trust store</text>
-  <text x="1066" y="417" class="note">System CA store plus any mounted custom certificates.</text>
-  <rect x="1044" y="456" width="250" height="86" rx="18" class="small-card"/>
-  <text x="1066" y="491" class="copy">Resolved content roots</text>
-  <text x="1066" y="519" class="note">Markdown and image directories are ready for the publish walk.</text>
-  <text x="1042" y="593" class="note">Banner fields, property key, and legacy cleanup pattern also come through here.</text>
+  <rect x="1050" y="150" width="380" height="560" rx="28" class="panel"/>
+  <circle cx="1106" cy="208" r="18" class="accent-c"/>
+  <text x="1140" y="218" class="panel-title">Resolved outputs</text>
+  <rect x="1086" y="258" width="308" height="92" rx="18" class="tile"/>
+  <text x="1112" y="294" class="tile-title">Target settings</text>
+  <text x="1112" y="321" class="copy">Space key, parent id, and</text>
+  <text x="1112" y="344" class="copy">REST API base are ready to use.</text>
+  <rect x="1086" y="372" width="308" height="92" rx="18" class="tile"/>
+  <text x="1112" y="408" class="tile-title">TLS trust store</text>
+  <text x="1112" y="435" class="copy">System CAs plus any mounted</text>
+  <text x="1112" y="458" class="copy">custom certificates.</text>
+  <rect x="1086" y="486" width="308" height="92" rx="18" class="tile"/>
+  <text x="1112" y="522" class="tile-title">Content roots</text>
+  <text x="1112" y="549" class="copy">Markdown and image directories</text>
+  <text x="1112" y="572" class="copy">are ready for the publish walk.</text>
+  <text x="1084" y="642" class="note">Banner values, property key, and the</text>
+  <text x="1084" y="667" class="note">legacy search pattern resolve here too.</text>
 
-  <path d="M390 360 C440 360 450 360 500 360" class="arrow"/>
-  <path d="M900 400 C950 400 960 400 1010 400" class="arrow"/>
-
-  <rect x="315" y="708" width="770" height="44" rx="16" fill="#17324d" opacity="0.93"/>
-  <text x="700" y="737" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#f8f4ed">Rule of thumb: local runs may start with YAML; automated runs should assume env-first configuration.</text>
+  <path d="M450 410 C500 410 510 410 560 410" class="arrow"/>
+  <path d="M940 410 C990 410 1000 410 1050 410" class="arrow"/>
 </svg>
