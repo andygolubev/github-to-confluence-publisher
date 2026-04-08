@@ -343,14 +343,18 @@ class ConfluenceClient:
             )
 
         logging.debug(response.status_code)
-        if response.status_code == 200:
-            logging.info("File attached successfully: %s", filename)
-            payload = _json_from_response(response, "Attach file failed")
-            validated = validate_response_payload(payload, AttachmentResponse, "Attach file failed")
-            logging.debug("%s", json.dumps(payload, indent=4, sort_keys=True))
-            logging.debug("Returning attached file id: %s", validated.results[0].id)
-            return validated.results[0].id
-        else:
+        if response.status_code != 200:
             msg = _confluence_request_error_message(response, "Attach file failed")
             logging.error("File has not attached: %s", msg)
             raise RuntimeError(msg)
+
+        logging.info("File attached successfully: %s", filename)
+
+        if existing_id:
+            # Update response is a single object, not a results[] list — ID is already known.
+            return existing_id
+
+        payload = _json_from_response(response, "Attach file failed")
+        validated = validate_response_payload(payload, AttachmentResponse, "Attach file failed")
+        logging.debug("%s", json.dumps(payload, indent=4, sort_keys=True))
+        return validated.results[0].id
