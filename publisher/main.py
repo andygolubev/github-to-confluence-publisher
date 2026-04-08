@@ -4,8 +4,8 @@ import os
 import sys
 
 from config.getconfig import getConfig
-from pagesController import deletePages, searchPages, verify_parent_page_exists
-from pagesPublisher import publishFolder
+from pagesController import ConfluenceClient
+from pagesPublisher import publish_folder
 
 logging.basicConfig(level=logging.INFO)
 
@@ -18,44 +18,58 @@ def _resolve_credentials(login, password):
     return login, password
 
 
-# Parse arguments; credentials may come from CONFLUENCE_LOGIN / CONFLUENCE_API_TOKEN
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--login",
-    default=None,
-    help="Confluence user email (or set CONFLUENCE_LOGIN)",
-)
-parser.add_argument(
-    "--password",
-    default=None,
-    help="Atlassian API token (or set CONFLUENCE_API_TOKEN)",
-)
-args = parser.parse_args()
-inputArguments = vars(args)
-login, password = _resolve_credentials(
-    inputArguments.get("login"), inputArguments.get("password")
-)
-if not login or not password:
-    logging.error(
-        "Missing credentials: pass --login and --password, or set "
-        "CONFLUENCE_LOGIN and CONFLUENCE_API_TOKEN."
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--login",
+        default=None,
+        help="Confluence user email (or set CONFLUENCE_LOGIN)",
     )
-    sys.exit(1)
-inputArguments["login"] = login
-inputArguments["password"] = password
+    parser.add_argument(
+        "--password",
+        default=None,
+        help="Atlassian API token (or set CONFLUENCE_API_TOKEN)",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview what would be published without making any API calls",
+    )
+    args = parser.parse_args()
+
+    login, password = _resolve_credentials(args.login, args.password)
+    if not login or not password:
+        logging.error(
+            "Missing credentials: pass --login and --password, or set "
+            "CONFLUENCE_LOGIN and CONFLUENCE_API_TOKEN."
+        )
+        sys.exit(1)
+
+    config = getConfig()
+    logging.debug(config)
+
+    if args.dry_run:
+        logging.info("Dry-run mode: no changes will be made to Confluence.")
+        logging.info("Would publish markdown from: %s", config["github_folder_with_md_files"])
+        logging.info(
+            "Target: space=%s parent_page_id=%s",
+            config["confluence_space"],
+            config["confluence_parent_page_id"],
+        )
+        return
+
+    client = ConfluenceClient(login=login, password=password, config=config)
+    client.verify_parent_page_exists()
+
+    pages = client.search_pages()
+    client.delete_pages(pages)
+
+    publish_folder(
+        folder=str(config["github_folder_with_md_files"]),
+        client=client,
+        images_root=str(config["github_folder_with_image_files"]),
+    )
 
 
-CONFIG = getConfig()
-
-logging.debug(CONFIG)
-
-verify_parent_page_exists(
-    login=inputArguments["login"], password=inputArguments["password"]
-)
-
-pages = searchPages(login=inputArguments['login'], password=inputArguments['password'])
-deletePages(pagesIDList=pages, login=inputArguments['login'], password=inputArguments['password'])
-
-publishFolder(folder = str(CONFIG["github_folder_with_md_files"]), 
-  login=inputArguments['login'], 
-  password=inputArguments['password'])
+if __name__ == "__main__":
+    main()

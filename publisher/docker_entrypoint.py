@@ -2,14 +2,20 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import subprocess
 import sys
 
 
 def main() -> None:
-    # Match previous shell entrypoint: pick up CAs under custom/ if mounted.
-    subprocess.run(["update-ca-certificates"], check=False)
+    # Pick up CAs under custom/ if mounted.
+    result = subprocess.run(["update-ca-certificates"], check=False)
+    if result.returncode != 0:
+        logging.warning(
+            "update-ca-certificates exited with code %d — CA bundle may be stale",
+            result.returncode,
+        )
     os.execv(
         sys.executable,
         [sys.executable, os.path.join(os.path.dirname(__file__), "main.py"), *sys.argv[1:]],
