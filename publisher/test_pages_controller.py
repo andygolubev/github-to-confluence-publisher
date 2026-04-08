@@ -125,6 +125,56 @@ class TestSearchPages(unittest.TestCase):
         self.assertEqual(cql.call_count, 2)
 
 
+class TestSetPagePropertyTolerates409(unittest.TestCase):
+    def test_409_does_not_raise(self):
+        cfg = {"confluence_url": "https://example.com/wiki/rest/api/", "publisher_property_key": "k"}
+        client = _make_client(cfg)
+        with patch("pagesController.requests.post") as post:
+            post.return_value = MagicMock(status_code=409, text="conflict")
+            client.set_page_property("1")  # should not raise
+
+
+class TestUpsertPage(unittest.TestCase):
+    def _base_cfg(self):
+        return {
+            "confluence_url": "https://example.com/wiki/rest/api/",
+            "confluence_space": "SPC",
+            "confluence_parent_page_id": 99,
+            "publisher_property_key": "k",
+            "banner_repo_url": "https://github.com",
+            "banner_project_name": "Test",
+        }
+
+    def test_creates_when_page_does_not_exist(self):
+        client = _make_client(self._base_cfg())
+        with patch.object(client, "_find_page_by_title", return_value=None):
+            with patch.object(client, "create_page", return_value="new-id") as create:
+                result = client.upsert_page("My Page", "<p>content</p>", parent_page_id=99)
+        create.assert_called_once_with("My Page", "<p>content</p>", 99)
+        self.assertEqual(result, "new-id")
+
+    def test_updates_when_page_exists(self):
+        client = _make_client(self._base_cfg())
+        with patch.object(client, "_find_page_by_title", return_value={"id": "existing-id", "version": 3}):
+            with patch.object(client, "update_page", return_value="existing-id") as update:
+                result = client.upsert_page("My Page", "<p>new</p>", parent_page_id=99)
+        update.assert_called_once_with("existing-id", "My Page", "<p>new</p>", 3)
+        self.assertEqual(result, "existing-id")
+
+    def test_update_page_increments_version(self):
+        client = _make_client(self._base_cfg())
+        with patch("pagesController.requests.put") as put:
+            put.return_value = MagicMock(
+                status_code=200,
+                text='{"id":"42"}',
+                json=lambda: {"id": "42"},
+            )
+            with patch.object(client, "set_page_property"):
+                client.update_page("42", "Title", "<p>body</p>", version=5)
+        payload = put.call_args.kwargs["json"]
+        self.assertEqual(payload["version"]["number"], 6)
+
+
 class TestDeletePages(unittest.TestCase):
     def test_returns_deleted_ids(self):
         cfg = {"confluence_url": "https://example.com/wiki/rest/api/"}

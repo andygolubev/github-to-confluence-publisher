@@ -61,14 +61,21 @@ def main() -> None:
     client = ConfluenceClient(login=login, password=password, config=config)
     client.verify_parent_page_exists()
 
-    pages = client.search_pages()
-    client.delete_pages(pages)
+    # Snapshot existing published pages before we touch anything.
+    existing_pages = set(client.search_pages())
 
-    publish_folder(
+    # Upsert all pages from the local folder (create new, update existing).
+    published_pages = publish_folder(
         folder=str(config["github_folder_with_md_files"]),
         client=client,
         images_root=str(config["github_folder_with_image_files"]),
     )
+
+    # Delete pages that were published before but are no longer in the repo.
+    stale_pages = existing_pages - published_pages
+    if stale_pages:
+        logging.info("Deleting %d stale page(s) no longer present in the repository", len(stale_pages))
+        client.delete_pages(list(stale_pages))
 
 
 if __name__ == "__main__":

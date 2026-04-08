@@ -32,7 +32,7 @@ def _publish_markdown_file(
     client: ConfluenceClient,
     images_root: str,
     parent_page_id,
-) -> None:
+) -> str:
     content_lines: list[str] = []
     files_to_upload: list[str] = []
 
@@ -46,7 +46,7 @@ def _publish_markdown_file(
         "".join(content_lines),
         extensions=['markdown.extensions.tables', 'fenced_code'],
     )
-    page_id = client.create_page(
+    page_id = client.upsert_page(
         title=entry.name,
         content=html_content,
         parent_page_id=parent_page_id,
@@ -61,28 +61,37 @@ def _publish_markdown_file(
         else:
             logging.error("File %s not found, nothing to attach", image_path)
 
+    return page_id
+
 
 def publish_folder(
     folder: str,
     client: ConfluenceClient,
     images_root: str,
     parent_page_id=None,
-) -> None:
+) -> set[str]:
+    """Publish all Markdown files and subdirectories. Returns the set of page IDs processed."""
+    processed: set[str] = set()
     logging.info("Publishing folder: %s", folder)
+
     for entry in os.scandir(folder):
         if entry.is_dir():
             logging.info("Found directory: %s", entry.path)
-            current_page_id = client.create_page(
+            current_page_id = client.upsert_page(
                 title=entry.name,
                 content=DISPLAY_CHILDREN_MACRO,
                 parent_page_id=parent_page_id,
             )
-            publish_folder(entry.path, client, images_root, parent_page_id=current_page_id)
+            processed.add(current_page_id)
+            processed.update(
+                publish_folder(entry.path, client, images_root, parent_page_id=current_page_id)
+            )
 
         elif entry.is_file():
             logging.info("Found file: %s", entry.path)
             if entry.path.lower().endswith('.md'):
-                _publish_markdown_file(entry, client, images_root, parent_page_id)
+                page_id = _publish_markdown_file(entry, client, images_root, parent_page_id)
+                processed.add(page_id)
             else:
                 logging.info("File %s is not a MD file, skipping", entry.path)
 
@@ -91,3 +100,5 @@ def publish_folder(
 
         else:
             logging.info("Found unknown entry type (not file, dir, or symlink): %s", entry.path)
+
+    return processed

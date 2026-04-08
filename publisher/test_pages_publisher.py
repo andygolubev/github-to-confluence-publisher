@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 import tempfile
 import unittest
-from unittest.mock import MagicMock, call
+from unittest.mock import MagicMock
 
 from pagesPublisher import DISPLAY_CHILDREN_MACRO, _extract_images, publish_folder
 
@@ -57,22 +57,34 @@ class TestExtractImages(unittest.TestCase):
 class TestPublishFolder(unittest.TestCase):
     def _make_client(self, page_id="page-123"):
         client = MagicMock()
-        client.create_page.return_value = page_id
+        client.upsert_page.return_value = page_id
         return client
 
     def test_publishes_md_file(self):
         client = self._make_client()
         with tempfile.TemporaryDirectory() as tmpdir:
-            md_path = os.path.join(tmpdir, "test.md")
-            with open(md_path, 'w') as f:
+            with open(os.path.join(tmpdir, "test.md"), 'w') as f:
                 f.write("# Hello\nSome content")
 
             publish_folder(tmpdir, client, images_root="/tmp/images")
 
-        client.create_page.assert_called_once()
-        call_kwargs = client.create_page.call_args.kwargs
+        client.upsert_page.assert_called_once()
+        call_kwargs = client.upsert_page.call_args.kwargs
         self.assertEqual(call_kwargs["title"], "test.md")
         self.assertIn("Hello", call_kwargs["content"])
+
+    def test_returns_set_of_processed_page_ids(self):
+        client = self._make_client(page_id="page-abc")
+        with tempfile.TemporaryDirectory() as tmpdir:
+            with open(os.path.join(tmpdir, "a.md"), 'w') as f:
+                f.write("content a")
+            with open(os.path.join(tmpdir, "b.md"), 'w') as f:
+                f.write("content b")
+
+            result = publish_folder(tmpdir, client, images_root="/tmp")
+
+        self.assertIsInstance(result, set)
+        self.assertEqual(result, {"page-abc"})  # both return same mock value
 
     def test_skips_non_md_files(self):
         client = self._make_client()
@@ -80,9 +92,10 @@ class TestPublishFolder(unittest.TestCase):
             with open(os.path.join(tmpdir, "readme.txt"), 'w') as f:
                 f.write("text file")
 
-            publish_folder(tmpdir, client, images_root="/tmp")
+            result = publish_folder(tmpdir, client, images_root="/tmp")
 
-        client.create_page.assert_not_called()
+        client.upsert_page.assert_not_called()
+        self.assertEqual(result, set())
 
     def test_creates_folder_page_with_children_macro(self):
         client = self._make_client(page_id="folder-id")
@@ -94,7 +107,7 @@ class TestPublishFolder(unittest.TestCase):
 
             publish_folder(tmpdir, client, images_root="/tmp")
 
-        calls = client.create_page.call_args_list
+        calls = client.upsert_page.call_args_list
         folder_call = next(c for c in calls if c.kwargs["title"] == "docs")
         self.assertIn("children", folder_call.kwargs["content"])
 
@@ -108,34 +121,50 @@ class TestPublishFolder(unittest.TestCase):
 
             publish_folder(tmpdir, client, images_root="/tmp")
 
-        calls = client.create_page.call_args_list
+        calls = client.upsert_page.call_args_list
         article_call = next(c for c in calls if c.kwargs["title"] == "article.md")
         self.assertEqual(article_call.kwargs["parent_page_id"], "folder-id")
+
+    def test_folder_page_id_included_in_returned_set(self):
+        call_count = [0]
+
+        def side_effect(**kwargs):
+            call_count[0] += 1
+            return f"id-{call_count[0]}"
+
+        client = MagicMock()
+        client.upsert_page.side_effect = side_effect
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            subdir = os.path.join(tmpdir, "section")
+            os.makedirs(subdir)
+            with open(os.path.join(subdir, "page.md"), 'w') as f:
+                f.write("body")
+
+            result = publish_folder(tmpdir, client, images_root="/tmp")
+
+        self.assertEqual(result, {"id-1", "id-2"})
 
     def test_attaches_local_images(self):
         client = self._make_client(page_id="img-page-id")
         with tempfile.TemporaryDirectory() as tmpdir:
             images_root = os.path.join(tmpdir, "images")
             os.makedirs(images_root)
-            img_path = os.path.join(images_root, "photo.jpg")
-            with open(img_path, 'wb') as f:
-                f.write(b'\xff\xd8\xff')  # minimal JPEG header
+            with open(os.path.join(images_root, "photo.jpg"), 'wb') as f:
+                f.write(b'\xff\xd8\xff')
 
-            md_path = os.path.join(tmpdir, "post.md")
-            with open(md_path, 'w') as f:
+            with open(os.path.join(tmpdir, "post.md"), 'w') as f:
                 f.write("![photo](photo.jpg)")
 
             publish_folder(tmpdir, client, images_root=images_root)
 
         client.attach_file.assert_called_once()
-        call_args = client.attach_file.call_args
-        self.assertEqual(call_args.args[0], "img-page-id")
+        self.assertEqual(client.attach_file.call_args.args[0], "img-page-id")
 
     def test_logs_error_for_missing_image(self):
         client = self._make_client()
         with tempfile.TemporaryDirectory() as tmpdir:
-            md_path = os.path.join(tmpdir, "post.md")
-            with open(md_path, 'w') as f:
+            with open(os.path.join(tmpdir, "post.md"), 'w') as f:
                 f.write("![missing](/images/ghost.jpg)")
 
             publish_folder(tmpdir, client, images_root="/nonexistent")
