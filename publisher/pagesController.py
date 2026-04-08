@@ -1,6 +1,7 @@
 import html
 import json
 import logging
+import os
 import re
 
 import requests
@@ -300,24 +301,50 @@ class ConfluenceClient:
                 raise RuntimeError(_confluence_request_error_message(response, "Delete page failed"))
         return deleted
 
-    def attach_file(self, page_id: str, attached_file) -> str:
-        logging.debug("Calling URL: %scontent/%s/child/attachment", self._base, page_id)
-
-        response = requests.post(
-            url=f"{self._base}content/{page_id}/child/attachment",
-            files={"file": attached_file},
-            data={"comment": "file was attached by the script"},
+    def _get_attachment_id(self, page_id: str, filename: str) -> str | None:
+        """Return the ID of an existing attachment with the given filename, or None."""
+        response = requests.get(
+            f"{self._base}content/{page_id}/child/attachment",
+            params={"filename": filename},
             auth=self._auth,
-            headers={
-                "Accept": "application/json",
-                "X-Atlassian-Token": "nocheck",
-            },
-            timeout=120,
+            timeout=30,
         )
+        if response.status_code != 200:
+            return None
+        results = response.json().get("results", [])
+        return str(results[0]["id"]) if results else None
+
+    def attach_file(self, page_id: str, attached_file) -> str:
+        """Upload a file as a page attachment. Updates the existing attachment if one with the same name already exists."""
+        filename = os.path.basename(attached_file.name)
+        existing_id = self._get_attachment_id(page_id, filename)
+
+        if existing_id:
+            logging.debug("Updating existing attachment %s on page %s", filename, page_id)
+            url = f"{self._base}content/{page_id}/child/attachment/{existing_id}/data"
+            response = requests.post(
+                url=url,
+                files={"file": attached_file},
+                data={"comment": "file was attached by the script"},
+                auth=self._auth,
+                headers={"X-Atlassian-Token": "nocheck"},
+                timeout=120,
+            )
+        else:
+            logging.debug("Creating new attachment %s on page %s", filename, page_id)
+            url = f"{self._base}content/{page_id}/child/attachment"
+            response = requests.post(
+                url=url,
+                files={"file": attached_file},
+                data={"comment": "file was attached by the script"},
+                auth=self._auth,
+                headers={"Accept": "application/json", "X-Atlassian-Token": "nocheck"},
+                timeout=120,
+            )
 
         logging.debug(response.status_code)
         if response.status_code == 200:
-            logging.info("File was attached successfully")
+            logging.info("File attached successfully: %s", filename)
             payload = _json_from_response(response, "Attach file failed")
             validated = validate_response_payload(payload, AttachmentResponse, "Attach file failed")
             logging.debug("%s", json.dumps(payload, indent=4, sort_keys=True))
