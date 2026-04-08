@@ -252,24 +252,6 @@ class ConfluenceClient:
         all_pages = self._search_pages_cql(cql_all)
 
         found_pages = [pid for pid in all_pages if self._has_publisher_property(pid, prop_key)]
-        logging.debug("Pages with publisher property: %s", found_pages)
-
-        if not found_pages:
-            legacy_pattern = str(self._cfg.get("confluence_search_pattern") or "").strip()
-            if legacy_pattern:
-                cql_legacy = (
-                    f'text~{{"{legacy_pattern}"}} AND type = page AND space = "{space}" '
-                    f"AND ancestor = {parent_id}"
-                )
-                logging.debug("Legacy text-based CQL: %s", cql_legacy)
-                legacy_ids = self._search_pages_cql(cql_legacy)
-                if legacy_ids:
-                    logging.warning(
-                        "Found %d page(s) via legacy title/text search; they will be deleted and "
-                        "recreated with content-property tagging.",
-                        len(legacy_ids),
-                    )
-                    found_pages = legacy_ids
 
         logging.debug(
             "Found pages in space %s under parent %s: %s",
