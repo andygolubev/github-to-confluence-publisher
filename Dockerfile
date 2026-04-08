@@ -2,7 +2,7 @@
 #
 # Configuration is only via environment variables (no config.yaml in the image).
 # Required: CONFLUENCE_URL, CONFLUENCE_SPACE, CONFLUENCE_PARENT_PAGE_ID
-# Credentials: CONFLUENCE_LOGIN, CONFLUENCE_API_TOKEN (or CONFLUENCE_PASSWORD)
+# Credentials: CONFLUENCE_LOGIN, CONFLUENCE_API_TOKEN
 # Optional: BANNER_REPO_URL, BANNER_PROJECT_NAME, PUBLISHER_MARKDOWN_ROOT,
 #   PUBLISHER_IMAGES_ROOT, PUBLISHER_PROPERTY_KEY, CONFLUENCE_LEGACY_SEARCH_PATTERN
 # Mount content: -v ./data:/app/data:ro -v ./data_images:/app/data_images:ro

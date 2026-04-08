@@ -37,7 +37,7 @@ Pinned dependency versions live in `publisher/requirements.txt`.
 Credentials are not stored in the repo. They are supplied via:
 
 - CLI: `--login` (email) and `--password` (API token), or
-- Environment: `CONFLUENCE_LOGIN` and `CONFLUENCE_API_TOKEN` (or `CONFLUENCE_PASSWORD`).
+- Environment: `CONFLUENCE_LOGIN` and `CONFLUENCE_API_TOKEN`.
 
 GitHub Actions maps repository secrets into these variables for automated runs. The Docker container receives them as `--env` flags.
 

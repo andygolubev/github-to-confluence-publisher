@@ -4,7 +4,7 @@ Smoke test: Confluence REST API reachable with configured credentials.
 Run from repo root:
   python3 publisher/test_atlassian_connection.py
 
-Requires CONFLUENCE_LOGIN and CONFLUENCE_API_TOKEN (or CONFLUENCE_PASSWORD).
+Requires CONFLUENCE_LOGIN and CONFLUENCE_API_TOKEN.
 Connection targets come from CONFLUENCE_URL, CONFLUENCE_SPACE, and
 CONFLUENCE_PARENT_PAGE_ID (or from publisher/config/config.yaml when present locally).
 """
@@ -27,19 +27,14 @@ from config.getconfig import getConfig
 
 def main() -> int:
     login = (os.environ.get("CONFLUENCE_LOGIN") or "").strip()
-    token = (
-        os.environ.get("CONFLUENCE_API_TOKEN")
-        or os.environ.get("CONFLUENCE_PASSWORD")
-        or ""
-    ).strip()
+    token = (os.environ.get("CONFLUENCE_API_TOKEN") or "").strip()
     if not login or not token:
         missing = []
         if not login:
             missing.append("CONFLUENCE_LOGIN (secret: confluence_login)")
         if not token:
             missing.append(
-                "CONFLUENCE_API_TOKEN or CONFLUENCE_PASSWORD "
-                "(secrets: confluence_api_token and/or confluence_password)"
+                "CONFLUENCE_API_TOKEN (GitHub secret: confluence_api_token)"
             )
         print(
             "error: missing credentials — " + "; ".join(missing),

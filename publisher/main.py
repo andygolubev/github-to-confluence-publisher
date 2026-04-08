@@ -13,10 +13,7 @@ logging.basicConfig(level=logging.INFO)
 def _resolve_credentials(login, password):
     login = (login or os.environ.get("CONFLUENCE_LOGIN") or "").strip() or None
     password = (
-        password
-        or os.environ.get("CONFLUENCE_API_TOKEN")
-        or os.environ.get("CONFLUENCE_PASSWORD")
-        or ""
+        password or os.environ.get("CONFLUENCE_API_TOKEN") or ""
     ).strip() or None
     return login, password
 
@@ -31,7 +28,7 @@ parser.add_argument(
 parser.add_argument(
     "--password",
     default=None,
-    help="Atlassian API token (or set CONFLUENCE_API_TOKEN / CONFLUENCE_PASSWORD)",
+    help="Atlassian API token (or set CONFLUENCE_API_TOKEN)",
 )
 args = parser.parse_args()
 inputArguments = vars(args)
